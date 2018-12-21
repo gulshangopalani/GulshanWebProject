@@ -126,7 +126,7 @@ app.factory('get_userser', function ($http, $location, sessionService, $rootScop
             }else{
                 var $promise = $http.get("http://13.233.205.216/gulshan.php?sportid=" +sportId+ "&eventid=" + matchId);
                 $promise.then(function (response) {
-                    debugger;
+                    ;
                     var MarketRunner = $filter('filter')(response.data.result, { id: MarketId })[0];
                     if (isback == "0")
                         var oddsValue = ($filter('filter')(MarketRunner.runners, { id: selectionId1 })[0].back[0].price);
@@ -169,14 +169,14 @@ app.factory('get_userser', function ($http, $location, sessionService, $rootScop
         getBetDelay:function(userId, $callback){
             var $promise = $http.post(BASE_URL + 'Createdealercontroller/getBetDelay/' + userId);
             $promise.then(function (response) {
-                //debugger;
+                //;
                 $callback(response.data.BetDelay[0].set_timeout);
             });
         },
         GetFancyLength:function($callback){
             var $promise = $http.post(BASE_URL + 'Createdealercontroller/getFancyLength/');
             $promise.then(function (response) {
-                //debugger;
+                //;
                 $callback(response.data.FancyNum[0].ID);
             });
         }

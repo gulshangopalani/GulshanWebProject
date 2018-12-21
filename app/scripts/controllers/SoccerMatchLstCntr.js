@@ -19,7 +19,7 @@ angular.module('ApsilonApp').controller('SoccerMatchLstCntr',['$scope', '$http',
         {
             if ($scope.oddsDetail != angular.isUndefinedOrNull && $scope.oddsDetail.length > 0) {
                 $http.get('Geteventcntr/getUserMatchLst/' + $scope.sportid).success(function (data, status, headers, config) {
-                   // //debugger;
+                   // //;
                     var allRunner = data.matchOdds;//sourabh 161227
                     var sportDetail = data.matchLst;
                     if ($scope.oddsDetail != angular.isUndefinedOrNull)
@@ -35,7 +35,7 @@ angular.module('ApsilonApp').controller('SoccerMatchLstCntr',['$scope', '$http',
                             }
                             else {
                                 //start for set Result
-                                ////debugger;
+                                ////;
                                 if (selectedRunner[0].status == "CLOSED") {
                                     var vSelectionID = $filter('filter')(selectedRunner[0].runners,{status : "WINNER"})[0].selectionId;
                                     var MatchId = $filter('filter')(sportDetail,{marketid : selectedRunner[0].marketId})[0].matchid;
@@ -48,7 +48,7 @@ angular.module('ApsilonApp').controller('SoccerMatchLstCntr',['$scope', '$http',
                                                var sportId=$filter('filter')(data.RunnerValue,{selectionId : vSelectionID})[0].sportId;
                                                selectionName1=$filter('filter')(data.RunnerValue,{selectionId : vSelectionID})[0].selectionName;
                                                 if(selectionName1!=""){
-                                                   //debugger;    
+                                                   //;
                                                 // MatchId; sportId; selectedRunner[0].marketId; vSelectionID;sportName; MatchName;selectionName1;
                                                     $scope.saveMatchoddsResult(MatchId, sportId,selectedRunner[0].marketId, vSelectionID, 1, sportName, MatchName, 'match Odds', selectionName1);  
                                                                                               
@@ -86,7 +86,7 @@ angular.module('ApsilonApp').controller('SoccerMatchLstCntr',['$scope', '$http',
     });
     $scope.getMatchDetail(1);
     $scope.saveMatchoddsResult=function(MatchId, sportId,marketId, vSelectionID,model_result, sportName, MatchName, matchodds, selectionName1){
-       // //debugger;
+       // //;
          var marketData = {
             Sport_id: sportId,
             Match_id: MatchId,

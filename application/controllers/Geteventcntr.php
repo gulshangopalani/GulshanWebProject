@@ -4,9 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	class Geteventcntr extends CI_Controller {
 
-		//public $APP_KEY = "pULrrs5uJ2CUBeMY";
+		public $APP_KEY = "otDjqrf7OP9KkTdI";
 
-		 public $APP_KEY = "otDjqrf7OP9KkTdI";
+		 //public $APP_KEY = "develovperkey";
+		 
+		 
 		
 
 		function __construct() {

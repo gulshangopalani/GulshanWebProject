@@ -2,16 +2,16 @@ app.controller('FancyBetListcntr', ['$scope', '$http','$stateParams','sessionSer
     $scope.GetUserData=function(){
         //http://betphub.com/Sessioncntr/getFancyData/28615049/35/1/0/2
         $http.get('Sessioncntr/getFancyBetList/' + $stateParams.matchId + '/' + $stateParams.fancyId +'/'+ sessionService.get('user_id')+ '/'+ sessionService.get('type') + '/'+ $stateParams.Type ).success(function(data, status, headers, config) {
-            debugger;
+            //debugger; gulshan gopal
             $scope.UserData = data.UserBetData;
         });
     }
     $scope.GetUserData();
     $scope.selectAll = function(selectedValue) {
-        debugger;
+        //debugger; gulshan gopal
         var MatchedBet=$scope.UserData;
         MatchedBet.find(function (item, itmeindex) {
-        debugger;           
+        //debugger; gulshan gopal
             item.Selected = selectedValue;           
            
         });    

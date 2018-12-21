@@ -24,7 +24,7 @@ app.controller('Serieslstfrmapicntr', function ($scope, $http, $stateParams, Dia
         var formData = { matchId: id, matchName: name, marketCount: marketCount, region: region, sportId: sportId, HelperID: sessionService.get('HelperID') }
         var url = BASE_URL + "Geteventcntr/saveSportSeries";
         $http.post(url, formData).success(function (response) {
-            //debugger;
+            //;
             //Dialog.autohide(response.message);
             var toast = $mdToast.simple().content(response.message).position('bottom right').hideDelay(1000);
             $mdToast.show(toast);

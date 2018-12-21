@@ -7,12 +7,12 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     $scope.display="true";
     $scope.GetUserList=function(){
         $http.get(BASE_URL+'Lstsavemstrcontroller/getDataById/'+sessionService.get('user_id')+'/'+sessionService.get('type')).then(function(response) {
-            debugger;
+            //  gulshan gopal;
             $scope.TotalBal=0;
             $scope.TotalLiability=0;
             $scope.UserList=response.data;
             for (var i = 0; i< response.data.length; i++) {
-                debugger;
+                // ; gulshan gopal
                 $scope.TotalBal=$scope.TotalBal+parseFloat(response.data[i].Balance);
                 $scope.TotalLiability=$scope.TotalLiability+parseFloat(response.data[i].Liability);
             }
@@ -21,7 +21,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     $scope.GetUserList();
     /*$scope.refresh_tree = function () {
         $http.get('Lstsavemstrcontroller/lstSaveMaster/' + sessionService.get('user_id') + '/' + sessionService.get('type') + '/' + sessionService.get('HelperID') + '/' + sessionService.get('Helperype')).success(function (data, status, headers, config) {
-            debugger;
+            
             $scope.treeNodes = data.tree;
         });
     }
@@ -67,7 +67,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     }
     /*end of change the user status*/
     $scope.submitForm_Users = function (user) {
-                debugger;
+                //; gulshan gopal
                 if (user.partnership == undefined) {  var partnership = 0; }
                 else { var partnership = user.partnership; }
                 
@@ -259,7 +259,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     /*end of user Deatails*/
      /*start code for free chips*/
     $scope.freechips = function (id) {
-        debugger;
+        //; gulshan gopal
             $http.get('Chipscntrl/getChipDataById/' + $scope.PID).success(function (data, status, headers, config) {
                 $scope.cipsData = data.betLibility;
                 $scope.pFreeChipVal = $scope.cipsData[0].FreeChip;
@@ -284,10 +284,10 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         });
     };
     function showChipsInOutController($scope, $mdDialog, prntScope, node) {
-        debugger;
+        //; gulshan gopal
             /*start code for free chips*/
         $scope.freechips1 = function (id) {
-            debugger;
+            //; gulshan gopal
                 $http.get('Chipscntrl/getChipDataById/' + sessionService.get('user_id')).success(function (data, status, headers, config) {
                     $scope.cipsData = data.betLibility;
                     $scope.pFreeChipVal = $scope.cipsData[0].FreeChip;
@@ -306,7 +306,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         prntScope.freechips(node.usecode);
         $scope.freechips1(node.usecode);
         $scope.FreeChipsSubmit = function (Chip, Type, UserID, Free, userType) {
-            debugger;
+            //; gulshan gopal
             prntScope.FreeChipsSubmit(Chip, Type, UserID, Free, userType,node);
             Chip.ChipVal = "";
             Chip.Ref = "";
@@ -314,7 +314,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         $scope.hide = function () { $mdDialog.hide(); };
     }
     $scope.FreeChipsSubmit = function (Chip, Type, UserID, Free, userType,node) {
-                debugger;
+                //; gulshan gopal
                 var userName = node.usename;
                 var ParantName = sessionService.get('slctUseName');
                 var LoginId = sessionService.get('user_id');
@@ -375,7 +375,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         });
     };
     function showChangePwdController($scope, $mdDialog, prntScope, node, sessionService) {
-        debugger;
+        //; gulshan gopal
         /*$scope.currentScope1 = currentScope1;*/
         $scope.node = node;
         $scope.chngPgetType = sessionService.get('type');
@@ -398,7 +398,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     }
     /*end of change user Password*/
     $scope.changeUserPasswordSubmit = function (user, node) {
-                debugger;
+                //; gulshan gopal
                 var userId = user.userId;                
                 var newPassword = user.newPassword;
                 var cnfnewPassword = user.cnfnewPassword;
@@ -435,7 +435,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     };
     /*start code edit ac of user*/
     $scope.showViewAccountForm = function () {
-               // //debugger;
+               // //;
         $mdDialog.show({
             controller: showViewSettingController,
             templateUrl: 'app/scripts/directives/popupform/view_accountUser.html?var='+Math.random(),
@@ -450,7 +450,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         $scope.showViewAccountForm();
     };
     $scope.UpdateViewAccount = function (useinfo, node) {
-                debugger;
+                //; gulshan gopal
                 var userId = useinfo.userId;
                 var Name = useinfo.Name;
                 var partnership = 0;
@@ -485,7 +485,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
                 });
             };
     function showViewSettingController($scope, $mdDialog, prntScope, node, Dialog,get_userser,sessionService) {
-        debugger;
+        //; gulshan gopal
         $scope.sessionusetype = sessionService.get('type');
         //$scope.currentScope1 = currentScope1;
         $scope.node = node;
@@ -532,7 +532,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
 
         }
         $scope.updatePartnerShip = function (Admin, Master, Dealer, ID) {
-           // //debugger;
+           // //;
             if ($scope.sessionusetype==1) {
                 var Master=$scope.Dealer_old-parseInt(Dealer);
                 var sumofVal = parseFloat(Admin) + parseFloat(Master) + parseFloat(Dealer)+Master;
@@ -581,7 +581,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         }
         
         $scope.updateCommission = function (oddsComm, sessionComm, otherComm, ID) {
-            debugger;
+            //; gulshan gopal
             if (oddsComm<=100 && sessionComm<=100 && otherComm<=100) {
                 $http.get('Createmastercontroller/updateCommission/' + oddsComm + '/' + sessionComm + '/' + otherComm + '/' + ID + '/' + sessionService.get('HelperID')).success(function (data1, status, headers, config) {
 
@@ -596,7 +596,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
            
         }
         $scope.UpdateViewAccount = function (user, node) {
-            debugger;
+            //; gulshan gopal
             
           
                 var userId = document.getElementById('vewMod2ID').value;
@@ -608,7 +608,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
                 var maxStake = document.getElementById('maxStake1').value;
                 var InPlayStack = document.getElementById('InPlayStack').value; 
                 get_userser.partnerValue(node.parentId, function (response) {
-                            debugger;
+                            //; gulshan gopal
                             $scope.tblParner = response;
                             var userInfo = {
                                 id: node.usecode,
@@ -695,7 +695,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     };
     // Start satelmentUser code
      $scope.showSettlement = function (node) {
-        debugger;
+        //; gulshan gopal
         $mdDialog.show({
             controller: showSettlementController,
             templateUrl: 'app/scripts/directives/popupform/satelmentUser.html?var='+Math.random(),
@@ -705,7 +705,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         });
     };
     function showSettlementController($scope, $mdDialog, prntScope, node){
-        debugger;
+        //; gulshan gopal
         $scope.node = node;
         $scope.userType = 2;
         $http.get('Chipscntrl/getChipDataById/' + sessionService.get('user_id')).success(function (data, status, headers, config) {
@@ -722,7 +722,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
             $scope.pchips = $scope.cipsData[0].Chip;
         });        
         $scope.MainChipsSubmit = function (Chip, Type, UserID, Free, userType) {
-            debugger;
+            //; gulshan gopal
             Chip.pFreeChipVal = $scope.pFreeChipVal;
             Chip.UFreeChipVal = $scope.UFreeChipVal;
             Chip.pChipBalance = $scope.pChipBalance;
@@ -744,7 +744,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         });
     };
     $scope.UpdateUserLock = function (node) {
-                debugger;
+                //; gulshan gopal
                 var userId = node.usecode;
                 var lockVal = node.mstrlock;
                 if (lockVal == 0) {

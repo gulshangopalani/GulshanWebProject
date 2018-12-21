@@ -27,7 +27,7 @@
           <ul class="ul">
             <li class="back">
               <a href="javascript:;" ng-click="backButton()">
-                <i class="fa fa-angle-double-left" aria-hidden="true"></i>Back    
+                <i class="fa fa-angle-double-left" aria-hidden="true"></i>Previous
               </a>
             </li>
             <li class="not" ng-repeat="series in GetMatchData">
@@ -39,14 +39,14 @@
         </nav>
       </section>    
       <!--=======SLID-NAV 4============-->
-      <section class="nav-4" id="nav-4">
+      <section class="nav-2" id="nav-2">
         <nav class="main-nav" id="not-sub-nav">
           <h2 class="title" ui-sref="userDashboard.Home">{{MatchName}} <a href="javascript:;">
                <span class="home-icon pull-right" id="menu-home"></span></a></h2>
           <ul class="ul">
             <li class="sub-back">
               <a href="javascript:;">
-                <i class="fa fa-angle-double-left" aria-hidden="true"></i>Back                
+                <i class="fa fa-angle-double-left" aria-hidden="true"></i>Previous
               </a>
             </li>
             <li ng-repeat="market in MatchMarket">

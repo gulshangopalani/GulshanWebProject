@@ -23,7 +23,7 @@
                              <div class="right-play">
                                <span  ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}">{{od.status=='OPEN'?od.inplay?"In-Play":"Going In-Play":od.status}}</span>
                                <span style="color: rgb(221,44,0);font-weight: 600;">{{match.MstDate | date : 'EEEE HH:mm'}}</span>
-                                
+
                             </div>
                           </div>
                           <div class="spor-rgt" ng-if='od=(oddsDetail|filter:{"marketId":match.marketid})[0]' ng-show='od.status=="OPEN"'>
@@ -71,10 +71,10 @@
                             </a>
 
                              <div class="right-play">
-                              
+
                                <span  ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}">{{od.status=='OPEN'?od.inplay?"In-Play":"Going In-Play":od.status}}</span>
                                 <span style="color: rgb(221,44,0);font-weight: 600;">{{match.MstDate | date : 'EEEE HH:mm'}}</span>
-                                
+
                             </div>
                           </div>
                           <div class="spor-rgt" ng-if='od=(oddsDetail|filter:{"marketId":match.marketid})[0]' ng-show='od.status=="OPEN"'>
@@ -124,10 +124,10 @@
                             </a>
 
                              <div class="right-play">
-                              
+
                                <span  ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}">{{od.status=='OPEN'?od.inplay?"In-Play":"Going In-Play":od.status}}</span>
                                 <span style="color: rgb(221,44,0);font-weight: 600;">{{match.MstDate | date : 'EEEE HH:mm'}}</span>
-                                
+
                             </div>
                           </div>
                           <div class="spor-rgt" ng-if='od=(oddsDetail|filter:{"marketId":match.marketid})[0]' ng-show='od.status=="OPEN"'>
@@ -178,10 +178,10 @@
                             </a>
 
                              <div class="right-play">
-                              
+
                                <span  ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}">{{od.status=='OPEN'?od.inplay?"In-Play":"Going In-Play":od.status}}</span>
                                 <span style="color: rgb(221,44,0);font-weight: 600;">{{match.MstDate | date : 'EEEE HH:mm'}}</span>
-                                
+
                             </div>
                           </div>
                           <div class="spor-rgt" ng-if='od=(oddsDetail|filter:{"marketId":match.marketid})[0]' ng-show='od.status=="OPEN"'>

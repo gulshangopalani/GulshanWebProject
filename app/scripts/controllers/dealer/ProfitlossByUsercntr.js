@@ -112,7 +112,7 @@ app.controller('ProfitlossByUsercntr',['$scope', '$http', 'sessionService', '$lo
 }]);
 app.filter('sumOfValue', function() {
     return function(data, key) {
-      debugger;
+     // debugger;
       if (angular.isUndefined(data) || angular.isUndefined(key))
         return 0;
       var sum = 0;

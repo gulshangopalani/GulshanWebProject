@@ -78,6 +78,7 @@ img.img_side
 .bet-tab li:last-child{ border-right:0;}
 /*Login css*/
 .login{padding-top: 160px;padding-bottom:60px;}
+
 .login-cont{ width:290px; max-width:90%; margin:0 auto;border-radius:5px; padding:20px 20px 40px;box-shadow: 0px 2px 12px 0px #37a6a7;}
 .login-logo{ text-align:center;}
 .login-logo img{ width:65%;}
@@ -175,21 +176,21 @@ height: 25px!important;
 
 .tab_container [id^="tab"]:checked + label {
   background: #fff;
-  box-shadow: inset 0 3px #0CE;
+  box-shadow: inset 0 3px #38396C;
 }
 
 .tab_container [id^="bet-tab"]:checked + label {
-  background: #647E90;
+  background: #38396C;
 }
 
 .tab_container [id^="sport-tab"]:checked + label {
-  background: #a7d8fd none repeat scroll 0 0;
-    border-bottom: 4px solid #fe5454;
+  background: #38396C none repeat scroll 0 0;
+    border-bottom: 4px solid #38396C;
     color: #fff;
 }
 
 .tab_container [id^="tab"]:checked + label .fa {
-  color: #0CE;
+  color: #38396C;
 }
 
 .tab_container label .fa {
@@ -2488,7 +2489,7 @@ md-toolbar md-icon {
 }
 
 .wall-bal-head span, .liab-bal-head span {
-    color: #fff;
+    color: #000000;
     letter-spacing: 1px;
     display: inline-block;
 }
@@ -3774,9 +3775,10 @@ table.table.table-bordered.table-condensed.table-responsive.bettable td {
     font-weight: 500;
 }
 .resp_table>.table thead:first-child>tr:first-child>th {
-    border-top: 1px solid #009688!important;
-    background: #009688!important;
-    color: #fffafa;
+    border-top: 2px solid #38396C !important;
+    background: #38396C !important;
+    padding: 6px !important;
+    color: #fffef7;
 }
 .listdata-table>.table thead:first-child>tr:first-child>th {
     border-top: 1px solid #191919!important;
@@ -3817,6 +3819,20 @@ width: 45%;
 {
   font-size: 13px;
 }
+
+a.home-logo-pa
+{
+    font-size: 18px;
+    font-weight: 700;
+    padding: 3px 0 3px;
+    line-height: 40px!important;
+    color: rgb(254, 255, 20);
+    margin-bottom: 122px;
+}
+a.home-logo-pa img
+{
+    height: 69px;
+}
 .team-home span
 {
   font-size: 18px;
@@ -3825,7 +3841,7 @@ width: 45%;
   line-height: 40px!important;
 }
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-    padding: 1px 5px;
+    padding: 10px 5px;
     line-height: 1.42857143;
     vertical-align: top;
     border-top: 0px !important; 
@@ -4220,7 +4236,7 @@ thead.cf {
     }
     
 .marqueeHead {
-    background-color: #000;
+    background-color: #38396C;
     padding-left: 120px;
     color:#fff;
 }

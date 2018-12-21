@@ -8,15 +8,14 @@ app.directive('dealerheader', ['$location','$http', 'sessionService', '$timeout'
         replace: true,
         scope: {},
         controller: ['$scope', '$http', 'loginService', '$mdDialog', '$window', 'Dialog', 'sessionService','$interval','get_userser','$state','speech',function ($scope, $http, loginService, $mdDialog, $window, Dialog, sessionService,$interval,get_userser,$state,speech) {
-            
-            $scope.$on('$locationChangeStart', function (event, next, current) { 
+
+            $scope.$on('$locationChangeStart', function (event, next, current) {
                 //event.preventDefault(); 
             });
-            
-            
+
             $scope.RedirectToFancy=function(fancyId,TypeID,MatchID,SportID,matchName){
                 $scope.setValue=fancyId;
-                debugger;
+                ;
                 $scope.showvalue = false;
                 $scope.displayFicon=false;
                 if (TypeID==1) {
@@ -25,29 +24,29 @@ app.directive('dealerheader', ['$location','$http', 'sessionService', '$timeout'
                 }else if(TypeID==2){
                     $state.go("dashboard.Sessionfancy", { 'matchId': MatchID,'FancyID':fancyId,'TypeID':TypeID,'matchName':matchName,'sportId':SportID });
                 }else if(TypeID==3){
-                   $state.go("dashboard.Khaddalfancy", { 'matchId': MatchID,'FancyID':fancyId,'TypeID':TypeID,'matchName':matchName,'sportId':SportID });
+                    $state.go("dashboard.Khaddalfancy", { 'matchId': MatchID,'FancyID':fancyId,'TypeID':TypeID,'matchName':matchName,'sportId':SportID });
                 }else if(TypeID==4){
-                   $state.go("dashboard.Lastdigit", { 'matchId': MatchID,'FancyID':fancyId,'TypeID':TypeID,'matchName':matchName,'sportId':SportID });
+                    $state.go("dashboard.Lastdigit", { 'matchId': MatchID,'FancyID':fancyId,'TypeID':TypeID,'matchName':matchName,'sportId':SportID });
                 }else if(TypeID==5){
                     $state.go("dashboard.Updown", { 'matchId': MatchID,'FancyID':fancyId,'TypeID':TypeID,'matchName':matchName,'sportId':SportID });
                 }
             }
-           
+
             //for Marque BY Manish
             $scope.ShowMessageOnHeader = function(){
                 $http.get('Betentrycntr/DisplayMsgOnHeader/').success(function (data, status, headers, config) {
-                        //debugger;
-                        $scope.diplayMsg = data.marqueMsg[0].Marquee;
-                        
+                    //;
+                    $scope.diplayMsg = data.marqueMsg[0].Marquee;
+
                 });
             }
             var msgHeader=function check_Fancydisplay() {
-                $scope.ShowMessageOnHeader();             
+                $scope.ShowMessageOnHeader();
             }
             var timerGo12 = $interval(msgHeader, 30000);
-             $scope.ShowMessageOnHeader();
+            $scope.ShowMessageOnHeader();
             //for Marque BY Manish
-           
+
             $("#mobileDemo").click(function() {
                 if($(".mainSite").hasClass('activeSideNav')){
                     $(".mainSite").removeClass('activeSideNav');
@@ -79,7 +78,7 @@ app.directive('dealerheader', ['$location','$http', 'sessionService', '$timeout'
                     }
                 }
             };
-            
+
         }]
     }
 }]);

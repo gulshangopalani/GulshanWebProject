@@ -56,7 +56,7 @@ app.controller('SetAdminLimitCntr', function($scope,$http){
        $scope.GetPoint();
        $scope.GetNotification=function(){
             $http.get('Betentrycntr/Getnotification/').success(function (data, status, headers, config) { 
-              debugger;
+              //debugger; gulshan gopal
                    $scope.notification = data.GetNotification[0].notificat_msg;
                     //$scope.message=data.message;
             });

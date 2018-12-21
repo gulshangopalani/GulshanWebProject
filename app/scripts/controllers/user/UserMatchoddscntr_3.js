@@ -1142,7 +1142,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
             pointDiff: pointDiff,
             deviceInformation: deviceInformation
         }
-        if(amount >= 10){
+        if(amount >= 1){
             if ($scope.checkValidation(sessionData,IndexVal)) {
                 /*start code for bet delay*/
                 get_userser.getBetDelay(sessionService.get('slctUseID'), function(data) {

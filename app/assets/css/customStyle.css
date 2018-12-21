@@ -1,40 +1,45 @@
 *
 {
-  font-family: 'Dhurjati', sans-serif;
+  font-family: Ubuntu, "times new roman", times, roman, serif;
 }
+html,
 body
 {
-  background:transparent;
 
 }
+
+h1 { font-family: Ubuntu; font-size: 23px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 23px; } h3 { font-family: Ubuntu; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 23px; } p { font-family: Ubuntu; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; } blockquote { font-family: Ubuntu; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; } pre { font-family: Ubuntu; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; }
 .totalamt .Libility
 {
   color:red;
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 600;
   margin-right: 100px;
 }
 .totalamt .balance
 {
   color:green;
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 600;
 }
 .container {
-    padding-right: 0px;
-    padding-left: 0px;
+    padding-right: 2px;
+    padding-left: 2px;
     margin-right: auto;
     margin-left: auto;
+    padding-bottom: 5px;
 }
 .container-fluid {
-    padding-right: 0px;
-    padding-left: 0px;
+    padding-right: 2px;
+    padding-left: 2px;
     margin-right: auto;
     margin-left: auto;
+    padding-bottom: 5px;
 }
 .row {
     margin-right: 0px;
     margin-left: 0px;
+    padding-bottom: 5px;
 }
 .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
     position: relative;
@@ -43,15 +48,15 @@ body
     padding-left: 0px;
 }
 .inplay .panel-heading {
-    background-color: #2ea298!important;
-    border-color: #2ea298!important;
+    background-color: #38396C!important;
+    border-color: #38396C!important;
 }
 .inplay .panel-heading a {
    color:#fff;
-   font-weight:900;
+   font-weight:1500;
 }
 .inplay .panel-body {
-    padding: 0px!important;
+    padding: 15px!important;
 }
 .inplay ul
 {
@@ -63,9 +68,9 @@ body
     min-width: 50%;
 }
 span.ag-paging-page-summary-panel button {
-    background-color: #5b9bd5;
-    border: 1px solid #5b9bd5;
-    border-radius: 4px;
+    background-color: #646964;
+    border: 1px solid #646964;
+    border-radius: 5px;
     color: #fff;
     padding: 2px 15px;
     line-height: 20px;
@@ -74,22 +79,22 @@ span.ag-paging-page-summary-panel button {
     cursor: pointer;
     padding: 10px 13px;
     width: 100%;
-    background-color: #30a39c;
+    background-color: #38396C;
     color: #fefdfd;
     font-size: 19px;
     font-weight: 700;
-    border-top: 1px solid #30a39c;
+    border-top: 1px solid #38396C;
 }
 .nav-tabs {
-    border-bottom: 1px solid #ddd;
-    background: #2e7d9c;
+    border-bottom: 5px solid #085301;
+    background: #085301;
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-    color: rgb(40,53,147);
+    color: #085301;
     cursor: default;
-    background-color: #cbef34;
+    background-color: #085301;
     border: 1px solid #ddd;
-    border-bottom-color: transparent;
+    border-bottom-color: goldenrod;
     font-weight: 600;
 }
 .nav-tabs>li>a {
@@ -97,7 +102,7 @@ span.ag-paging-page-summary-panel button {
     line-height: 1.42857143;
     border: 1px solid transparent;
     border-radius: 4px 4px 0 0;
-    color: #fff;
+    color: #085301;
     font-weight: 600;
 }
 .nav-tabs>li>a:hover {
@@ -108,7 +113,7 @@ span.ag-paging-page-summary-panel button {
     background-color: transparent;
 }
 .btn.focus, .btn:focus, .btn:hover {
-    color: #f9f7f7;
+    color: #085301;
     text-decoration: none;
 }
 .rigt-ref {
@@ -121,7 +126,7 @@ span.ag-paging-page-summary-panel button {
     font-weight: 600;
 }
 .box-heading {
-    background-color: #2e7d9c;
+    background-color: #38396C;
     color: #fff;
     padding: 5px 10px;
     font-weight: 600;
@@ -206,23 +211,33 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
   padding: 0px;
 }
 .example3 .navbar {
+    background-color: #e4e2e2;
     position: relative;
     min-height: 50px;
     margin-bottom: 0px!important;
     border: 1px solid transparent;
+    height: 70px;
 }
-.example3 .navbar-inverse {
-    background-color: #00BCD4;
-    border-color: #00BCD4;
-}
+
 .example3 .navbar-brand>img {
   height: 90%;
-  padding: 10px;
+  padding: 1px;
   width: auto;
   margin-left: 10px;
 }
 .example3 .navbar-brand {
-  height: 70px;
+  height: 80px;
+}
+
+a.logout {
+    text-decoration: none;
+}
+.logout span {
+    cursor: pointer;
+    color: #000;
+    font-size: 14px;
+    margin-top: -1px;
+    padding-left: 5px;
 }
 /*sidebar css*/
 .sidebar
@@ -237,7 +252,8 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
     min-height: 450px; 
     background: #fff;
     border: 1px solid #ddd;
-    text-decoration: none;  
+    text-decoration: none;
+    background-color: #e4e2e2;
 }
 .title {
     font-size: 18px;
@@ -254,7 +270,7 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 .ul li a{   
     text-align: left;
     text-decoration: none;
-    font-size: 12px;
+    font-size: 16px;
     text-transform: capitalize;
     color: #333;
     padding: 20px 15px;
@@ -323,7 +339,8 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
     z-index: 2;display: none;
     background: #fff;
     border: 1px solid #ddd;
-    text-decoration: none;  
+    text-decoration: none;
+    background-color: #e4e2e2;
 }
 .nav-2 .ul li a{   
     text-align: left;
@@ -352,6 +369,7 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
     position:absolute;
     height: 100%;
     width: 100%!important;
+    background-color: #e4e2e2;
 }
 /*footer css*/
 .footer
@@ -413,7 +431,7 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
   }
   .right-play span {
     /*line-height: 33px;*/
-    font-size: 12px;
+    font-size: 14px;
 }
 .sport-high a.left-play {
     float: left;
@@ -433,7 +451,7 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
   color:#005ba2;
   font-weight: bold;
   line-height: 22px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .spor-rgt{ 
     float: right;
@@ -476,7 +494,7 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 }
 .matchodd-header
 {
-  background-color: #2d2c2c;
+  background-color: #38396C;
     padding: 3px 10px;
 }
 .matchodd-header .matchhead
@@ -528,9 +546,11 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 }
 .table.market-listing-table > thead > tr > th.back {
     width: 63px;
+    background-color: #a7d8fd;
 }
 .table.market-listing-table > thead > tr > th.lay {
     width: 63px;
+    background-color: #f9c9d4;
 }
 .table.market-listing-table > tbody > tr > td.back.unhighlighted{
     background-color: #e3f3fe;
@@ -763,7 +783,7 @@ padding:0!important;
     }
 .navbar-header .fa {
     font-size: 20px;
-    color: #fff;
+    color: #38396C;
     padding-top:19px;
 }
 /*dealer page css*/
@@ -915,7 +935,8 @@ padding:10px;
 }
 .wall-bal-head span, .liab-bal-head span {
     color: #f7ddc7;
-    font-size: 16px;
+    font-size: 20px;
+    letter-spacing: 0px !important;
 }
 .text-left
 {
@@ -963,6 +984,9 @@ text-align: left!important;
   padding: 4px!important;
   width: auto;
   margin-left: 0px;
+  min-height: 72px;
+  min-width: 123px;
+  margin-top: -20px;
 }
 .wal-lia-box {
     margin-left: 4px;
@@ -997,7 +1021,7 @@ text-align: left!important;
 }
 .navbar-header .fa {
     font-size: 20px;
-    color: #fff;
+    color: #38396C;
     padding-top: 18px;
 }
  .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
@@ -1148,6 +1172,7 @@ ul.sport-high.fancyListDiv li:nth-child(2){
     height: auto!important;
     margin-left: 1px!important;
     display: none;
+    width: 50%;
 }
 .navbar.second-navbar {
     position: relative;
@@ -1173,7 +1198,7 @@ ul.sport-high.fancyListDiv li:nth-child(2){
 }
 md-menu.md-menu a {
   text-decoration: none;
-    color: #fff;
+    color: #38396C;
   cursor: pointer;
   padding: 0px 10px;
       font-size: 18px;
@@ -1277,13 +1302,16 @@ md-backdrop.md-dialog-backdrop {
     padding-top: 0px;
     padding-top: 20px;
     padding-bottom: 15px;
+    margin-top: -5px;
 }
 .right-notification
 {
-  padding-top:15px;
+    padding-top:15px;
 }
+
+
 .my-market>caption+thead>tr:first-child>td, .my-market>caption+thead>tr:first-child>th, .my-market>colgroup+thead>tr:first-child>td, .my-market>colgroup+thead>tr:first-child>th, .my-market>thead:first-child>tr:first-child>td, .my-market>thead:first-child>tr:first-child>th {
-    background-color: #288890;
+    background-color: #38396C;
     color: #fff;
     font-size: 16px;
     border-top: 0;
@@ -1512,7 +1540,6 @@ line-height: 45px;
 font-weight: 400;
 text-transform: uppercase;
 }
-
 
 //*bet slip css*/
 
@@ -1860,4 +1887,144 @@ input[type="number"].ng-invalid, input[type="text"].ng-invalid {
     margin-top: 5px;
     clear: both;
 }
+
+.user-balance {
+    color: green;
+    cursor: default;
+}
+.user-liability {
+    color: #c10a31;
+}
+.header-menu {
+    float: right;
+}
+
+
+
+
+
+@media screen and (max-width: 760px) {
+    /* Wrapper for page content to push down footer */
+    #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by its height */
+        margin: 0 auto -60px;
+        /* Pad bottom by footer height */
+        padding: 0 0 60px;
+    }
+    /* Set the fixed height of the footer here */
+    #footer {
+        height: 60px;
+        background-color: white;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: block !important;
+    }
+    /* Custom page CSS
+    -------------------------------------------------- */
+    /* Not required for template or sticky footer method. */
+
+    #wrap > .container {
+        padding: 10px 15px 0;
+    }
+
+    #footer > .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .navbar-header {
+        float:none;
+        width:100%;
+        padding:10px;
+    }
+    .navbar-brand {
+        font-size:20pt;
+        float:none;
+    }
+    #bottomNav {
+        padding:10px;
+        background-color: #38396C;
+        padding-top: 2px;
+    }
+    #bottomNav a {
+        font-size:16pt;
+        color:#ddd;
+        text-decoration:none;
+    }
+    #bottomNav a:hover {
+        color:white;
+    }
+    #bottomNav .bottom-links {
+        font-size: 16px;
+    }
+    .padding {
+        padding: -1px 12px!important;
+    }
+    .header-menu {
+        margin-top: 5px;
+    }
+    .spor-lft a {
+        font-size: 11px;
+    }
+    .right-play span {
+        font-size: 11px;
+    }
+}
+
+.panel:last-child {
+    margin-bottom: 5em !important;
+}
+
+/*#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    !* Negative indent footer by its height *!
+    margin: 0 auto -60px;
+    !* Pad bottom by footer height *!
+    padding: 0 0 60px;
+}*/
+/* Set the fixed height of the footer here */
+#footer {
+    height: 60px;
+    background-color: #f5f5f5;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: none;
+    z-index: 20;
+}
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+/*#wrap > .container {
+    padding: 10px 15px 0;
+}
+#footer > .container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.navbar-header {
+    float:none;
+    width:100%;
+    padding:10px;
+}
+.navbar-brand {
+    font-size:20pt;
+    float:none;
+}
+#bottomNav {
+    padding:10px;
+}
+#bottomNav a {
+    font-size:24pt;
+    color:#ddd;
+    text-decoration:none;
+}
+#bottomNav a:hover {
+    color:#fff;
+}*/
 /*bet slip css end*/

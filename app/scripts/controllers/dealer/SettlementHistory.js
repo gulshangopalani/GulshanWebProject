@@ -82,7 +82,7 @@ app.controller('Chiphistorycntr', function ($scope, $http, $filter, sessionServi
         columnDefs: columnDefsLgr,
         rowModelType: 'pagination',
          getRowHeight: function(params) {
-            debugger;
+            //debugger; gulshan gopal
             var t=25 * (Math.floor(params.data.narration.length / 45) + 1);
         // assuming 50 characters per line, working how how many lines we need
         return 18 * (Math.floor(params.data.narration.length / 18) + 1);

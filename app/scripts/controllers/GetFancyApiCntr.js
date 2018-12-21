@@ -2,11 +2,11 @@ app.controller('GetFancyApiCntr', function ($scope, $http, $stateParams, Dialog,
     $scope.MatchId=$stateParams.MatchId; 
     $scope.GetFancy=function(){
         $http.get("http://tacchysport.com/gulshan.php?sportid=4&eventid="+$stateParams.MatchId).then(function successCallback(response){
-                debugger;
+                //; gulshan gopal
                 $scope.apiFancy = response.data.result;
         }).then(function(apiFancy){                     
             $http.get("Lstsavemstrcontroller/GetFancyOnHeader/"+$stateParams.MatchId).then(function successCallback(response){
-                debugger;                           
+                //; gulshan gopal
                 $scope.fancyFromDb = response.data.getFancy;
                 $scope.apiFancy.find(function(item,index){
                     if($scope.fancyFromDb.length >0){
@@ -26,7 +26,7 @@ app.controller('GetFancyApiCntr', function ($scope, $http, $stateParams, Dialog,
     }   
     $scope.GetFancy();
     $scope.saveFancy = function (FancyData) {
-        debugger;
+        //; gulshan gopal
         if(FancyData.runners[0].back[0].price==100){
             var PointDiff=10;
         }else{

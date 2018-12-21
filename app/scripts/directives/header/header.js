@@ -300,9 +300,9 @@ app.controller('editFancy',function($scope,$http, $mdDialog,Dialog, prntScope,id
         });
     };
     $scope.LastDigitFancy = function (formData) {
-        //debugger;
+        //;
         var formData1 = { HeadName: formData.HeadName, remarks: formData.remarks, mid: $scope.MatchID, fancyType: $scope.fancyType, date: $scope.dt, time: $scope.Time,FancyId:$scope.ID,sid:4,upDwnLimit:formData.upDwnLimit }
-        //debugger;
+        //;
         var url = BASE_URL + "Createmastercontroller/EditFancy";
         $http.post(url, formData1).success(function (response) {
             Dialog.autohide(response.message);

@@ -21,20 +21,20 @@ app.controller('Editfancycntr', function ($scope, $rootScope, $http, $stateParam
     //     });
     // }
     $scope.setMessage = function (msgChk) {
-        debugger;
+        //debugger; gulshan gopal
         var TypeId = 2;
         var formData = { TypeId: TypeId, message: msgChk,MatchID: $stateParams.MatchID};
         var url = BASE_URL + "Lstsavemstrcontroller/setFancyMsg/";
             $http.post(url, formData).success(function (response) {
-                debugger;
+                //debugger; gulshan gopal
                 var resp="Update Success "+msgChk;
                 Dialog.autohide(resp);
                 $http.get('Lstsavemstrcontroller/EditMultipleFancy/' + $stateParams.MatchID).success(function (data, status, headers, config) {
-                    debugger;
+                    //debugger; gulshan gopal
                     $scope.SessionData=data.FancyData;
                     //$scope.ArrayItem.items.find(function (item, itmeindex) {if (item.ItemID == $scope.Raw.aCode && item.typeId == $scope.Rawtype) { temp = 1; }});
                     $scope.SessionData.find(function (item, index) {
-                        debugger;
+                        //debugger; gulshan gopal
                        if(index == IndexVal && item.active==0) {
                            
                             $scope.SessionData[index].SessInptNo = "";
@@ -56,7 +56,7 @@ app.controller('Editfancycntr', function ($scope, $rootScope, $http, $stateParam
     $scope.get_fancyData = function () {
         $http.get('Lstsavemstrcontroller/getFancyByEdit/' + $stateParams.FancyID + '/' + $stateParams.TypeID).success(function (data, status, headers, config) {
             
-            debugger;
+            //debugger; gulshan gopal
             $scope.SessionData = data.FancyData;
             $scope.ID = data.FancyData[0].ID;
             $scope.NoValume = parseInt(data.FancyData[0].NoValume);
@@ -293,7 +293,7 @@ app.controller('Editfancycntr', function ($scope, $rootScope, $http, $stateParam
         var formData = { status: Fancy.fStatus, FancyId: Fancy.FancyId, NoVal: Fancy.example, YesVal: Fancy.example_1, MaxStake: Fancy.MaxStake, NoValume: Fancy.NoValume, YesValume: Fancy.YesValume, pointDiff: Fancy.pointDiff };
         var url = BASE_URL + "Lstsavemstrcontroller/NormalFancy";
         $http.post(url, formData).success(function (response) {
-            debugger;
+            //debugger; gulshan gopal
             $scope.get_fancyData();
             $('#inputNo').focus();
             $scope.NoValume = 100;
@@ -307,7 +307,7 @@ app.controller('Editfancycntr', function ($scope, $rootScope, $http, $stateParam
         var url = BASE_URL + "Lstsavemstrcontroller/chnageRate";
         $http.post(url, formData).success(function (response) {
             $scope.myVar=0;
-            debugger;
+            //debugger; gulshan gopal
             $scope.get_fancyData();
             $scope.$parent.vChkUserUpdate = setInterval($scope.$parent.ChkUserUpdate, 1000);
             $('#inputNo').focus();
@@ -327,7 +327,7 @@ app.directive('userlist', function () {
                 $scope.myVar = 0
                 $scope.GetSesFancyUserLst = response;
                 get_userser.GetFancyBal($stateParams.FancyID, function (response1) {
-                    debugger;
+                    //debugger; gulshan gopal
                     $scope.myVar =parseInt(response1);
                 });
                 /*for (var i = 0; i < $scope.GetSesFancyUserLst.length; i++) {

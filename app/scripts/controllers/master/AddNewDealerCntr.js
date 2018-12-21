@@ -1,10 +1,10 @@
 'use strict';
 angular.module('ApsilonApp').controller('AddNewDealerCntr',['$scope','$mdDialog', '$http', 'sessionService','$filter','$stateParams', function ($scope, $mdDialog,$http, sessionService,$filter,$stateParams) {
-   debugger;
+   //debugger; gulshan gopal
 	$scope.user={};
 	$scope.getDate = new Date();
 	$scope.submitForm_Users = function (user) {
-		debugger;
+		//debugger; gulshan gopal
 		if (user.partnership == undefined) {  var partnership = 0; } else { var partnership = user.partnership; }
 
 		var formData = {

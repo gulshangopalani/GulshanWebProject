@@ -1,7 +1,8 @@
-﻿'use strict';
+
+'use strict';
 angular.module('ApsilonApp').controller('dealerdashboard',['$scope', '$http', 'sessionService', '$timeout', 'deviceDetector','$filter', function ($scope, $http, sessionService, $timeout, deviceDetector,$filter) {
    $scope.getMatchResult = function () {
-    debugger;
+    // debugger;
         $http.get('Geteventcntr/getUserMatchResult/' + sessionService.get('slctUseID') + '/' + sessionService.get('slctUseTypeID')).success(function (data, status, headers, config) {
             $scope.matchResult = data.matchRslt;
             getDynamicOdds();
@@ -15,9 +16,9 @@ angular.module('ApsilonApp').controller('dealerdashboard',['$scope', '$http', 's
     var marketTimer;
     function getDynamicOdds() 
     {
-        debugger;
+        // debugger;
         marketTimer = $timeout(function () {
-            debugger;
+           // debugger;
             $http.get('Geteventcntr/getUserMatchResult/' + sessionService.get('slctUseID') + '/' + sessionService.get('slctUseTypeID')).success(function (data, status, headers, config) {
                 $scope.matchResult = data.matchRslt;           
             }).error(function (data, status, header, config) {

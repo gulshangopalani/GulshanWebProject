@@ -7,7 +7,7 @@ angular.module('ApsilonApp').controller('HorseMatchLstCntr',['$scope', '$http', 
         $scope.oddsDetail = angular.isUndefinedOrNull;
         $scope.sportid = matchId;//sourabh 170106
         $http.get('Geteventcntr/getUserMatchLst/' + $scope.sportid).success(function (data, status, headers, config) {
-            debugger;
+            //debugger; gulshan gopal
             $scope.sportDetail = data.matchLst;
             $scope.oddsDetail = data.matchOdds;//sourabh 161227
             getDynamicOdds();
@@ -49,7 +49,7 @@ angular.module('ApsilonApp').controller('HorseMatchLstCntr',['$scope', '$http', 
                                                var sportId=$filter('filter')(data.RunnerValue,{selectionId : vSelectionID})[0].sportId;
                                                selectionName1=$filter('filter')(data.RunnerValue,{selectionId : vSelectionID})[0].selectionName;
                                                 if(selectionName1!=""){
-                                                   debugger;    
+                                                   //debugger; gulshan gopal
                                                 // MatchId; sportId; selectedRunner[0].marketId; vSelectionID;sportName; MatchName;selectionName1;
                                                     $scope.saveMatchoddsResult(MatchId, sportId,selectedRunner[0].marketId, vSelectionID, 1, sportName, MatchName, 'match Odds', selectionName1);  
                                                                                               

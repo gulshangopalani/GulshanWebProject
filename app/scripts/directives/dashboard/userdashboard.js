@@ -78,6 +78,7 @@ angular.module('ApsilonApp').controller('userdashboard',['$scope', '$http', 'ses
             }
         }, 3000);
     }
+
     $scope.$on("$destroy", function (event) {
                //alert("working123");
                //$timeout.cancel(getDynamicOdds);

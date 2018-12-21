@@ -5,8 +5,8 @@
             <div class="col-sm-3 col-xs-6">
               <div class="navbar-header ">
                  <a id="mobileDemo" class="button-collapse"><i class="fa fa-bars"></i></a>
-                 <a class="navbar-brand visible-xs"><img src="app/images/login.png" alt="logo"></a>
-                  <a class="navbar-brand hidden-xs"><img src="app/images/login.png" alt="logo"></a>
+
+                  <a class="home-logo-pa"  href="/wingsExchange/#/userDashboard/Home"><img src="app/images/Home_logo.png" /></a>
               </div>
             </div>
            <div class="col-sm-9">
@@ -35,7 +35,19 @@
       </div>
       <usersidebar></usersidebar>
 
+      <div id="footer">
+              <div class="col-xs-12 navbar-inverse navbar-fixed-bottom">
+                  <div class="row" id="bottomNav">
+                       <div class="col-xs-4 text-center"><a ui-sref="userDashboard.Home"><i class="fa fa-home"></i><br><span class="bottom-links">Home</span></a></div>
+                       <div class="col-xs-4 text-center"><a ui-sref="userDashboard.myMarketCntr"><i class="fa fa-trophy"></i><br><span class="bottom-links">Running Bets</span></a></div>
+                       <div class="col-xs-4 text-center"><a href="#"><i class="fa fa-user-circle"></i><br><span class="bottom-links">Accounts</span></a></div>
+                  </div>
+              </div>
+          </div>
+
     </div>
+
+
 
 
 

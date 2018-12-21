@@ -1,5 +1,5 @@
 app.controller('Sessionfancycntr', function ($scope, $http, $rootScope, $stateParams, sessionService, $interval, Dialog, get_userser, deviceDetector, speech, focus,SessionFancy) {
-    debugger;
+    // gulshan gopal;
     get_userser.userChipSetting(function (response) {
         $rootScope.userPlcBtn = response;
         $rootScope.MyLenth = response.length;
@@ -78,7 +78,7 @@ app.controller('Sessionfancycntr', function ($scope, $http, $rootScope, $statePa
         var sessionData = {
             userId: UserId,ParantId: ParantId,loginId: loginId,betValue: amount,FancyID: $scope.FancyID,matchId: $scope.matchId,OddValue: $scope.isBackYes,type: sessionStorage.type,OddsNumber: OddsNumber,TypeID: $scope.TypeID,HeadName: HeadName,SessInptNo: SessInptNo,SessInptYes: SessInptYes,sportId: sportId,FancyId: FncyId,pointDiff: pointDiff,deviceInformation: deviceInformation
         }
-       /* debugger;
+       /* ;
         if($scope.GetFancyBal());*/
         get_userser.GetFancyBal($stateParams.FancyID, function (response1) { 
            
@@ -91,7 +91,7 @@ app.controller('Sessionfancycntr', function ($scope, $http, $rootScope, $statePa
 
 
                 
-        debugger;
+        // gulshan gopal;
         var GetSumVal=0;
         GetSumVal = parseInt($scope.TotalBet) + parseInt(amount);
         var chkuBaL = 0;
@@ -105,7 +105,7 @@ app.controller('Sessionfancycntr', function ($scope, $http, $rootScope, $statePa
         $promise.then(function (response) {
             //new code for check Balance 04-apr-2017 by ajay sir
             /*$http.get('Sessioncntr/GetSumOfBet/'+UserId+'/'+$stateParams.matchId+'/'+$stateParams.FancyID+'/'+$stateParams.TypeID+'/'+SessInptYes+'/'+SessInptNo).success(function (data, status, headers, config) {
-            debugger;
+            ;
             console.log(data.betSum);
            
         }).error(function (data, status, header, config) {
@@ -124,7 +124,7 @@ app.controller('Sessionfancycntr', function ($scope, $http, $rootScope, $statePa
             var active = parseInt(response.data.userInfo[0].active);
             var usetype = parseInt(response.data.userInfo[0].usetype);
             if (mstrlock == 1 && lgnusrlckbtng == 1 && lgnusrCloseAc == 1 && active == 1 && usetype == 3 && (stakeLimit == 0 || stakeLimit >= amount)) {
-                debugger;
+                //; gulshan gopal
                 if ((chkuBaL >= amount)) {
                     if ((parseInt($scope.TotalBet) <= MaxStake-500 && GetSumVal <= MaxStake+500)) {
                         if ($scope.checkValidation(sessionData)) {
@@ -275,7 +275,7 @@ app.controller('Sessionfancycntr', function ($scope, $http, $rootScope, $statePa
     new agGrid.Grid(gridDiv, gridOptions);
     $scope.GetFancyData = function () {
         get_userser.GetFancyData($stateParams.matchId, $stateParams.FancyID, sessionService.get('user_id'), sessionService.get('type'), $stateParams.TypeID, function (response) {
-            debugger;
+           //  gulshan gopal;
             $scope.FancyData = response.data.fancyForm;
             $scope.scorePosition = response.data.scorePosition;
             $scope.showOdd1 = false;

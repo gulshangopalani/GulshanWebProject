@@ -8,11 +8,11 @@ angular.module('ApsilonApp').directive('headerNotificationdealer', ['$timeout', 
         controller: function ($scope, $http, loginService, $mdDialog, sessionService, $rootScope, get_userser, Dialog,$state) {
             $scope.$on('$locationChangeStart', function (event, next, current) {
                 //alert("State Change");
-             event.preventDefault();
+                event.preventDefault();
             });
             $scope.GetUsrBalance=function(){
                 $http.get('Chipscntrl/getChipDataById/' + sessionStorage.user_id).success(function (data, status, headers, config) {
-                    $scope.cipsData = data.betLibility;                
+                    $scope.cipsData = data.betLibility;
                     $scope.FreeChips = $scope.cipsData[0].FreeChip;
                     $scope.ChipInOut = $scope.cipsData[0].Chip;
                     $scope.Liability = $scope.cipsData[0].Liability;
@@ -21,7 +21,7 @@ angular.module('ApsilonApp').directive('headerNotificationdealer', ['$timeout', 
                 });
             }
             $scope.Redirection=function(redirectLoc){
-                
+
                 $state.go(redirectLoc);
                 alert(redirectLoc);
 
@@ -29,7 +29,7 @@ angular.module('ApsilonApp').directive('headerNotificationdealer', ['$timeout', 
             $scope.myPOPUP = true;
             if (sessionService.get('HelperID') == '0')
                 $scope.name = sessionStorage.user;
-            else 
+            else
                 $scope.name = sessionService.get('HelperName');
             $scope.usertype = sessionStorage.type;
             $scope.slctUseName = sessionStorage.slctUseName;
@@ -166,8 +166,8 @@ angular.module('ApsilonApp').directive('headerNotificationdealer', ['$timeout', 
             } else if (userType != 0 && changePass == 0) {
                 $scope.changePassPopup();
             } else {
-               /* localStorage.getItem("$_") == null ? $scope.showTermAndCondition() : "";
-                localStorage.setItem("$_", true);*/
+                /* localStorage.getItem("$_") == null ? $scope.showTermAndCondition() : "";
+                 localStorage.setItem("$_", true);*/
             }
 
             function DialogController($scope, $mdDialog) {

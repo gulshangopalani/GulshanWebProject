@@ -1,8 +1,8 @@
-<div class="row" style="background: linear-gradient(to bottom, #68d8d6, #ffffff);">
+<div class="row ng-scope" style="height: 700px">
 <div class="col-sm-6 col-sm-offset-3 login">
 <div class="login-cont">
   <div class="login-logo" ng-init="user={username1:'',password1:''}">
-    <img src="app/images/login.png" style="width:100%!important;">
+    <img src="app/images/Home_logo.png" style="width:100%!important;">
   </div>                                                                                            
   <!-- FORM -->
   <form name="userForm" method="post">

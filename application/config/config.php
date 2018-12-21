@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-$config['title'] = '::::';
+$config['title'] = 'Wings Exchange';
 /*
 |--------------------------------------------------------------------------
 | Base Site URL

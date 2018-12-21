@@ -171,6 +171,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$cookie = "";
 						$username = "bf.developer18@gmail.com";
 						$password = "12suren34";
+						//$username = "username";
+						//$password = "password";
 						/*$username = "Michelsung@yandex.com";
 						$password = "@sung123";*/
 						

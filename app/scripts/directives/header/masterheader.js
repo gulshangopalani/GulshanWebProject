@@ -16,7 +16,7 @@ app.directive('masterheader', ['$location','$http', 'sessionService', '$timeout'
             
             $scope.RedirectToFancy=function(fancyId,TypeID,MatchID,SportID,matchName){
                 $scope.setValue=fancyId;
-                debugger;
+                
                 $scope.showvalue = false;
                 $scope.displayFicon=false;
                 if (TypeID==1) {
@@ -36,7 +36,7 @@ app.directive('masterheader', ['$location','$http', 'sessionService', '$timeout'
             //for Marque BY Manish
             $scope.ShowMessageOnHeader = function(){
                 $http.get('Betentrycntr/DisplayMsgOnHeader/').success(function (data, status, headers, config) {
-                        //debugger;
+                        //;
                         $scope.diplayMsg = data.marqueMsg[0].Marquee;
                         
                 });

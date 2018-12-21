@@ -89,7 +89,7 @@ app.controller('anctStatementCntr', function ($scope, $http, $filter, sessionSer
     }
     $scope.GetLeger();
     $scope.GetBalance=function(index,chips){
-        debugger;
+      //  debugger;
         if(index==0){
                 document.getElementById(index).value = parseFloat(chips);
         }else{

@@ -16,7 +16,6 @@
       <meta name="viewport" content="width=device-width"></meta>
       <title>	<?php echo $this->config->item('title'); ?></title>
       <link rel="stylesheet" href="app/assets/css/angular-material.css" />
-      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
       <link rel="stylesheet" href="app/assets/css/fonts_css.css"/>
       <link rel="stylesheet" href="app/dist/angular-tree-widget.css"/>
       <link rel="stylesheet" href="app/assets/css/bootstrap.min.css"/>
@@ -24,6 +23,7 @@
       <link rel="stylesheet" href="app/assets/css/my-style.css?ver=1.2"/>
       <link rel="stylesheet" href="app/styles/libs/loading-bar.min.css"/>
       <link rel="stylesheet" href="app/dist/ng-slim-scroll.css"/>
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu" />
       
      
   </head>

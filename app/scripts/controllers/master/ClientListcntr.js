@@ -8,20 +8,20 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     $scope.display="true";
     $scope.GetUserList=function(){
         $http.get(BASE_URL+'Lstsavemstrcontroller/getDataById/'+sessionService.get('user_id')+'/'+sessionService.get('type')).then(function(response) {
-            debugger;
+            //debugger; gulshan gopal
             $scope.UserList=response.data;
         });
     }
     $scope.GetUserList();
     $scope.refresh_tree = function () {
         $http.get('Lstsavemstrcontroller/GetTree/' + sessionService.get('user_id') + '/' + sessionService.get('type') + '/' + sessionService.get('HelperID') + '/' + sessionService.get('Helperype')).then(function (response) {
-            debugger;
+            //debugger; gulshan gopal
             $scope.TotalLiability=0;
             $scope.TotalBal=0;
             $scope.treeNodes = response.data.tree;
             response.data.tree.find(function(value, index) {
                 $http.get(BASE_URL+'Chipscntrl/getChipDataById/'+value.mstrid).then(function(response) {
-                    debugger;
+                    //debugger; gulshan gopal
                     $scope.TotalLiability=$scope.TotalLiability+parseFloat(response.data.betLibility[0].Liability);
                     $scope.TotalBal=$scope.TotalBal+parseFloat(response.data.betLibility[0].Balance);
                 });
@@ -81,13 +81,13 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         });
     }
     $scope.showViewSetting = function (node) {  //currentScope1
-        debugger;
+        //debugger; gulshan gopal
         $scope.vcNode = node;
         //$scope.vcCurrentScope1 = currentScope1;
         $scope.showViewAccountForm();
     };
     $scope.UpdateViewAccount = function (useinfo, node) {
-                debugger;
+                //debugger; gulshan gopal
                 var userId = useinfo.userId;
                 var Name = useinfo.Name;
                 var partnership = 0;
@@ -122,7 +122,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
                 });
             };
     function showViewSettingController($scope, $mdDialog, prntScope, node, Dialog,get_userser,sessionService) {
-        debugger;
+        //debugger; gulshan gopal
         $scope.sessionusetype = sessionService.get('type');
         //$scope.currentScope1 = currentScope1;
         $scope.node = node;
@@ -169,7 +169,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
 
         }
         $scope.updatePartnerShip = function (Admin, Master, Dealer, ID) {
-            debugger;
+            //debugger; gulshan gopal
           /*  if ($scope.sessionusetype==1) {
                 var Master=$scope.Dealer_old-parseInt(Dealer);
                 var sumofVal = parseFloat(Admin) + parseFloat(Master) + parseFloat(Dealer);
@@ -218,7 +218,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         }
         
         $scope.updateCommission = function (oddsComm, sessionComm, otherComm, ID) {
-            debugger;
+            //debugger; gulshan gopal
             if (oddsComm<=100 && sessionComm<=100 && otherComm<=100) {
                 $http.get('Createmastercontroller/updateCommission/' + oddsComm + '/' + sessionComm + '/' + otherComm + '/' + ID + '/' + sessionService.get('HelperID')).success(function (data1, status, headers, config) {
 
@@ -233,7 +233,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
            
         }
         $scope.UpdateViewAccount = function (user, node) {
-            debugger;
+            //debugger; gulshan gopal
             
           
                 var userId = document.getElementById('vewMod2ID').value;
@@ -245,7 +245,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
                 var maxStake = document.getElementById('maxStake1').value;
                 var InPlayStack = document.getElementById('InPlayStack').value; 
                 get_userser.partnerValue(node.parentId, function (response) {
-                            debugger;
+                            //debugger; gulshan gopal
                             $scope.tblParner = response;
                             var userInfo = {
                                 id: node.usecode,
@@ -274,7 +274,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     /*end of edit ac of user*/
     /*end of change the user status*/
     $scope.submitForm_Users = function (user) {
-                debugger;
+                //debugger; gulshan gopal
                 if (user.partnership == undefined) {  var partnership = 0; }
                 else { var partnership = user.partnership; }
                 
@@ -452,7 +452,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     /*end of user Deatails*/
      /*start code for free chips*/
     $scope.freechips = function (id) {
-        debugger;
+       //debugger; gulshan gopal
             $http.get('Chipscntrl/getChipDataById/' + $scope.PID).success(function (data, status, headers, config) {
                 $scope.cipsData = data.betLibility;
                 $scope.pFreeChipVal = $scope.cipsData[0].FreeChip;
@@ -477,10 +477,10 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         });
     };
     function showChipsInOutController($scope, $mdDialog, prntScope, node) {
-        debugger;
+        //debugger; gulshan gopal
             /*start code for free chips*/
         $scope.freechips1 = function (id) {
-            debugger;
+            //debugger; gulshan gopal
                 $http.get('Chipscntrl/getChipDataById/' + sessionService.get('user_id')).success(function (data, status, headers, config) {
                     $scope.cipsData = data.betLibility;
                     $scope.pFreeChipVal = $scope.cipsData[0].FreeChip;
@@ -499,7 +499,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         prntScope.freechips(node.usecode);
         $scope.freechips1(node.usecode);
         $scope.FreeChipsSubmit = function (Chip, Type, UserID, Free, userType) {
-            debugger;
+            //debugger; gulshan gopal
             prntScope.FreeChipsSubmit(Chip, Type, UserID, Free, userType,node);
             Chip.ChipVal = "";
             Chip.Ref = "";
@@ -507,7 +507,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         $scope.hide = function () { $mdDialog.hide(); };
     }
     $scope.FreeChipsSubmit = function (Chip, Type, UserID, Free, userType,node) {
-                debugger;
+                //debugger; gulshan gopal
                 var userName = node.usename;
                 var ParantName = sessionService.get('slctUseName');
                 var LoginId = sessionService.get('user_id');
@@ -551,7 +551,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
                     /*check the User Balance*/
                     $http.get('Chipscntrl/getChipDataById/' + UserID).success(function (data, status, headers, config) {
                         var uWallet=parseFloat($scope.cipsData[0].Balance);
-                        debugger;
+                        //debugger; gulshan gopal
                         if(uWallet >= parseFloat($scope.ChipAmt)){
                             $http({
                                 method: 'POST',
@@ -596,7 +596,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         });
     };
     function showChangePwdController($scope, $mdDialog, prntScope, node, sessionService) {
-        debugger;
+        //debugger; gulshan gopal
         /*$scope.currentScope1 = currentScope1;*/
         $scope.node = node;
         $scope.chngPgetType = sessionService.get('type');

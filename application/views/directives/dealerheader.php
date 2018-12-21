@@ -5,15 +5,15 @@
            <div class="row padding">
             <div class="col-sm-3 col-xs-6">
               <div class="navbar-header ">
-                 <a class="navbar-brand visible-xs" ui-sref="dealerDashboard.Home"><img src="app/images/login.png" alt="logo"></a>
-                  <a class="navbar-brand hidden-xs" ui-sref="dealerDashboard.Home"><img src="app/images/login.png" alt="logo"></a>
+                 <a class="navbar-brand visible-xs" ui-sref="dealerDashboard.Home"><img src="app/images/Home_logo.png" alt="logo"></a>
+                  <a class="navbar-brand hidden-xs" ui-sref="dealerDashboard.Home"><img src="app/images/Home_logo.png" alt="logo"></a>
               </div>
             </div>
           <div class="col-sm-9">
             <header-notificationdealer></header-notificationdealer>
 
           </div>
-          
+
           <!--/.nav-collapse -->
          </div>
       </div>

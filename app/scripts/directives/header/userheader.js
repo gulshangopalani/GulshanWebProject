@@ -52,7 +52,7 @@ app.directive('userheader', ['$location','$http', 'sessionService', '$timeout','
             
             $scope.getNotifi_status();
             $scope.updatenoti_status=function(){
-                debugger;
+                
                 $http.get('Betentrycntr/updatenoti_status/'+sessionStorage.user_id).success(function (data, status, headers, config) {                        
                 });
             }
