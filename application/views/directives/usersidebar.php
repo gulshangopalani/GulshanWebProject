@@ -4,9 +4,11 @@
         <nav id="main-nav">
           <h2 class="title" ui-sref="userDashboard.Home">Home <a href="javascript:;">
                <span class="home-icon pull-right" id="menu-home"></span></a></h2>
-          <ul class="ul" id="main-menu" >
+           <h2 class="upcomingmatches" ui-sref="userDashboard.upcomingmatches">Next Matches <a href="javascript:;">
+          <span class="home-icon pull-right" id="menu-home"></span></a></h2>
+          <ul class="ul" id="main-menu">
             <li ng-repeat="displyData in sprtData" id="{{displyData.id}}" ><!-- ng-if="displyData.id !=7" -->
-              <a href="javascript:;" ui-sref-active="active" ui-sref="userDashboard.{{displyData.name}}MatchLst" ng-click="displaysubmenu(displyData.id);getSeriesMatch(displyData.id, 0);">
+              <a href="javascript:;" ui-sref-active="active" ui-sref="userDashboard.{{displyData.name}}MatchLst" ng-click="displaysubmenu(displyData.id);getSeriesName(displyData.id, 0);getSeriesMatch(displyData.id, 0);">
                 <img src="app/images/sportsicon/{{displyData.name}}.png">{{displyData.name}}
               </a>
             </li>
@@ -97,6 +99,7 @@
             </li>                     
           </ul>
         </nav>
+
       </section>
 
   </div>

@@ -13,7 +13,7 @@ angular.module('ApsilonApp').directive('headerNotificationuser', ['$timeout', fu
         controller: function ($scope, $http, loginService, $mdDialog, sessionService, $rootScope, get_userser, Dialog,$state) {
             $scope.$on('$locationChangeStart', function (event, next, current) {
                 //alert("State Change");
-             event.preventDefault();
+             //event.preventDefault();
             });
 
             $scope.GetUsrBalance=function(){

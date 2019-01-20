@@ -190,7 +190,6 @@
         Message.fn.checkRequired = function (name, fn) {
             var result = true;
             if (!name) {
-                console.log(exceptionResource.requireMsgName);
                 result = false;
             }
             if (fn && !angular.isFunction(fn)) {

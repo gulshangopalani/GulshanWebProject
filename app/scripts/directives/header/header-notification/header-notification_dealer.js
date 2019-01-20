@@ -8,7 +8,7 @@ angular.module('ApsilonApp').directive('headerNotificationdealer', ['$timeout', 
         controller: function ($scope, $http, loginService, $mdDialog, sessionService, $rootScope, get_userser, Dialog,$state) {
             $scope.$on('$locationChangeStart', function (event, next, current) {
                 //alert("State Change");
-                event.preventDefault();
+                //event.preventDefault();
             });
             $scope.GetUsrBalance=function(){
                 $http.get('Chipscntrl/getChipDataById/' + sessionStorage.user_id).success(function (data, status, headers, config) {

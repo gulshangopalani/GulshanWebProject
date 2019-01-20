@@ -253,7 +253,6 @@ app.controller('editFancy',function($scope,$http, $mdDialog,Dialog, prntScope,id
                 $scope.PlayerId=data.FancyData[0].PlayerId;
                 var x="0";
                 $scope.getplayer.find(function(a,b){if(a.ID==$scope.PlayerId)x=b;});
-                console.log(x);
                 $scope.selectedOption = $scope.getplayer[x];
             }
             $scope.formData = {

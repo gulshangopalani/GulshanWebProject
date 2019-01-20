@@ -5,7 +5,7 @@ app.controller('Formctrl', function ($scope, $http, loginService) {
         loginService.logout();
     }
     $scope.submitForm = function (user) {
-        debugger;
+        //debugger;
         $scope.loadingM=true;
         loginService.login(user, $scope, function (response) {
             $scope.loadingM=false;

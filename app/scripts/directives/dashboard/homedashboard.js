@@ -1,26 +1,31 @@
 'use strict';
-angular.module('ApsilonApp').controller('homedashboard',['$scope', '$http', 'sessionService', '$timeout', 'deviceDetector','$filter', function ($scope, $http, sessionService, $timeout, deviceDetector,$filter) {
-   
-    
+angular.module('ApsilonApp').controller('homedashboard',['$location', '$scope', '$http', 'sessionService', '$timeout', 'deviceDetector','$filter', function ($location, $scope, $http, sessionService, $timeout, deviceDetector,$filter) {
+
     $scope.getMatchDetail = function (matchId) {
         $scope.sportDetail = angular.isUndefinedOrNull;
         $scope.oddsDetail = angular.isUndefinedOrNull;
         $scope.sportid = matchId;//sourabh 170106
         $http.get('Geteventcntr/getUserMatchLst/' + $scope.sportid).success(function (data, status, headers, config) {
-            ;
             $scope.sportDetail = data.matchLst;
-            $scope.oddsDetail = data.matchOdds;//sourabh 161227
+            if(window.location.href.indexOf('inplay=true') > 0) {
+                $scope.oddsDetail = data.matchOdds.filter(function(item) {
+                    return item.inplay == true;
+                });
+            } else {
+                $scope.oddsDetail = data.matchOdds;
+            }
+            console.log($scope.oddsDetail);
             getDynamicOdds();
         });
     }
     var marketTimer;
-    function getDynamicOdds() 
+    function getDynamicOdds()
     {
         marketTimer = $timeout(function ()//sourabh 161229
         {
             if ($scope.oddsDetail != angular.isUndefinedOrNull && $scope.oddsDetail.length > 0) {
                 $http.get('Geteventcntr/getUserMatchLst/' + $scope.sportid).success(function (data, status, headers, config) {
-                   // //;
+                    // //;
                     var allRunner = data.matchOdds;//sourabh 161227
                     var sportDetail = data.matchLst;
                     if ($scope.oddsDetail != angular.isUndefinedOrNull)
@@ -42,21 +47,21 @@ angular.module('ApsilonApp').controller('homedashboard',['$scope', '$http', 'ses
                                     var MatchId = $filter('filter')(sportDetail,{marketid : selectedRunner[0].marketId})[0].matchid;
                                     var sportName = $filter('filter')(sportDetail,{marketid : selectedRunner[0].marketId})[0].sportname;
                                     var MatchName = $filter('filter')(sportDetail,{marketid : selectedRunner[0].marketId})[0].matchName;
-                                    
+
                                     var selectionName1 = "";
-                                    $http.get('Geteventcntr/getSelectionName/' + selectedRunner[0].marketId + '/' + MatchId).success(function (data, status, headers, config) {                                                
-                                               
-                                               var sportId=$filter('filter')(data.RunnerValue,{selectionId : vSelectionID})[0].sportId;
-                                               selectionName1=$filter('filter')(data.RunnerValue,{selectionId : vSelectionID})[0].selectionName;
-                                                if(selectionName1!=""){
-                                                   //;
-                                                // MatchId; sportId; selectedRunner[0].marketId; vSelectionID;sportName; MatchName;selectionName1;
-                                                    $scope.saveMatchoddsResult(MatchId, sportId,selectedRunner[0].marketId, vSelectionID, 1, sportName, MatchName, 'match Odds', selectionName1);  
-                                                                                              
-                                                }
-                                                   
+                                    $http.get('Geteventcntr/getSelectionName/' + selectedRunner[0].marketId + '/' + MatchId).success(function (data, status, headers, config) {
+
+                                        var sportId=$filter('filter')(data.RunnerValue,{selectionId : vSelectionID})[0].sportId;
+                                        selectionName1=$filter('filter')(data.RunnerValue,{selectionId : vSelectionID})[0].selectionName;
+                                        if(selectionName1!=""){
+                                            //;
+                                            // MatchId; sportId; selectedRunner[0].marketId; vSelectionID;sportName; MatchName;selectionName1;
+                                            $scope.saveMatchoddsResult(MatchId, sportId,selectedRunner[0].marketId, vSelectionID, 1, sportName, MatchName, 'match Odds', selectionName1);
+
+                                        }
+
                                     });
-                                   
+
                                 }
                                 //end of set Result
                                 try { $scope.oddsDetail.runners[0].ex.availableToBack[0].price = "" } catch (e) { }
@@ -78,17 +83,17 @@ angular.module('ApsilonApp').controller('homedashboard',['$scope', '$http', 'ses
         }, 3000);
     }
     $scope.$on("$destroy", function (event) {
-               //alert("working123");
-               //$timeout.cancel(getDynamicOdds);
-               //$interval.cancel(getDynamicOdds);
-               $timeout.cancel(marketTimer);
-                //clearInterval(si_fancyData);
-              // si_fancyData=angular.isUndefinedOrNull;
+        //alert("working123");
+        //$timeout.cancel(getDynamicOdds);
+        //$interval.cancel(getDynamicOdds);
+        $timeout.cancel(marketTimer);
+        //clearInterval(si_fancyData);
+        // si_fancyData=angular.isUndefinedOrNull;
     });
     $scope.getMatchDetail(0);
     $scope.saveMatchoddsResult=function(MatchId, sportId,marketId, vSelectionID,model_result, sportName, MatchName, matchodds, selectionName1){
-       // //;
-         var marketData = {
+        // //;
+        var marketData = {
             Sport_id: sportId,
             Match_id: MatchId,
             market_id: marketId,
@@ -103,8 +108,8 @@ angular.module('ApsilonApp').controller('homedashboard',['$scope', '$http', 'ses
         //$timeout.cancel(marketTimer);
         //marketTimer = angular.isUndefinedOrNull;
         $http({ method: 'POST', url: 'Geteventcntr/SetResult/', data: marketData, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (data) {
-               try {  $scope.message = data.status.message;console.log("working "+data.status.message); }
-               catch (e) { console.log(data.status.error); }
+            try {  $scope.message = data.status.message;console.log("working "+data.status.message); }
+            catch (e) { console.log(data.status.error); }
         });
         console.log("working ");
     }
@@ -121,7 +126,7 @@ angular.module('ApsilonApp').controller('homedashboard',['$scope', '$http', 'ses
     }
     $scope.getMatchResult = function () {
         $http.get('Geteventcntr/getUserMatchResult/' + sessionService.get('slctUseID') + '/' + sessionService.get('slctUseTypeID')).success(function (data, status, headers, config) {
-            ;
+
             $scope.matchResult = data.matchRslt;
             $scope.datapoints = data.matchRslt;
         }).error(function (data, status, header, config) {
@@ -140,4 +145,36 @@ angular.module('ApsilonApp').controller('homedashboard',['$scope', '$http', 'ses
         if (z > 0) return z; else return "-";
     }
     $scope.$on("$destroy", function (event) { $timeout.cancel(marketTimer); marketTimer = angular.isUndefinedOrNull; });//sourabh 161229
+
+    $scope.deleteMatchOdds = function(matchId) {
+        $mdDialog.show({
+            controller: SetPasswrdCntrForMatch,
+            templateUrl: 'app/scripts/directives/header/header-notification/bet_password.html',
+            locals: { matchId:matchId},
+            clickOutsideToClose: false,
+            fullscreen: false,
+        });
+    };
+
+    function SetPasswrdCntrForMatch(scope,$mdDialog,matchId) {
+        scope.checkPassword=function(password){
+            var marketData = { Password: password };
+            $http({ method: 'POST', url: 'Betentrycntr/CheckAdminPass/', data: marketData, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+                .success(function(data) {
+                    if (data.error=='1') {
+                        scope.hide();
+                        // alert(betId + '/' + userId+'/'+MarketId);
+                        $http.get('Betentrycntr/deleteMatchOdds/' + matchId).success(function (data, status, headers, config) {
+                            alert("MatchOdd Deleted Successfully...");
+                        });
+
+                    }else{
+                        scope.hide();
+                        alert(data.message);
+                    }
+
+                });
+        }
+        scope.hide = function () { $mdDialog.hide(); };
+    }
 }]);

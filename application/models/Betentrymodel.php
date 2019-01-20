@@ -239,6 +239,21 @@ class Betentrymodel extends CI_Model
 			$query = $this->db->get();
 			return $query->result();
 	}
+	function deleteMatchOdds($matchID){
+    			$query =$this->db->query("call SP_DelCompleteMatchOddsBet($matchID)");
+    			$res = $query->result_array();
+    			$query->next_result();
+    			$query->free_result();
+    			echo $query;
+    	}
+
+    	function deleteAllFancy($fancyId){
+       			$query =$this->db->query("call SP_DelAllFancy($fancyId)");
+       			$res = $query->result_array();
+       			$query->next_result();
+       			$query->free_result();
+       			echo $query;
+       }
 	function FancyRes(){
 		
 			$this->db->select("mf.HeadName,mf.MatchID,mf.TypeID,mtchmst.matchName");

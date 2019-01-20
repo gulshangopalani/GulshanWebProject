@@ -619,7 +619,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     }
     /*end of change user Password*/
     $scope.changeUserPasswordSubmit = function (user, node) {
-        debugger;
+        //debugger;
         var userId = user.userId;                
         var newPassword = user.newPassword;
         var cnfnewPassword = user.cnfnewPassword;
@@ -714,7 +714,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
     };
     // Start satelmentUser code
      $scope.showSettlement = function (node) {
-        debugger;
+        //debugger;
         $mdDialog.show({
             controller: showSettlementController,
             templateUrl: 'app/scripts/directives/popupform/satelmentUser.html?var='+Math.random(),
@@ -724,7 +724,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         });
     };
     function showSettlementController($scope, $mdDialog, prntScope, node){
-        debugger;
+        //debugger;
         $scope.node = node;
         $scope.userType = 2;
         $http.get('Chipscntrl/getChipDataById/' + sessionService.get('user_id')).success(function (data, status, headers, config) {
@@ -741,7 +741,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
             $scope.pchips = $scope.cipsData[0].Chip;
         });        
         $scope.MainChipsSubmit = function (Chip, Type, UserID, Free, userType) {
-            debugger;
+            //debugger;
             Chip.pFreeChipVal = $scope.pFreeChipVal;
             Chip.UFreeChipVal = $scope.UFreeChipVal;
             Chip.pChipBalance = $scope.pChipBalance;
@@ -763,7 +763,7 @@ angular.module('ApsilonApp').controller('ClientListcntr',['$scope','$mdDialog', 
         });
     };
     $scope.UpdateUserLock = function (node) {
-                debugger;
+               // debugger;
                 var userId = node.usecode;
                 var lockVal = node.mstrlock;
                 if (lockVal == 0) {

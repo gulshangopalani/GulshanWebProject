@@ -26,10 +26,10 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         $rootScope.userPlcBtn = response;
         $rootScope.MyLenth = response.length;
     });
-    $scope.GetScore=function(){      
+    $scope.GetScore=function(){
         var eventIds = $stateParams.MatchId;
         $http.get(BASE_URL+'Geteventcntr/GetScoreApi/'+eventIds).then(function(result) {
-            
+
             if (result.data.length!= 0) {
                 $scope.Documents=result.data[0];
                 $scope.displayScore=true;
@@ -44,77 +44,195 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         });
     }
     $scope.stopScore = $interval(function () {
-                    //Display the current time.
-       $scope.GetScore();
+        //Display the current time.
+        $scope.GetScore();
     }, 5000);
-    $scope.GetScore=function(){      
+    $scope.GetScore=function(){
         var eventIds = $stateParams.MatchId;
         $http({
-                    method: 'POST',
-                    url: 'Geteventcntr/matchMarketLst/',
-                    data: {
-                        matchId: $scope.MatchId,
-                        sportsId: $scope.SPORTID,
-                        user_id: sessionService.get('user_id')
-                    },
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                }).success(function(data) {
-                    $scope.PLAYPAUSE=$filter('filter')(data.MatchMarket, { Id: $scope.MarketId })[0].IsPlay;
+            method: 'POST',
+            url: 'Geteventcntr/matchMarketLst/',
+            data: {
+                matchId: $scope.MatchId,
+                sportsId: $scope.SPORTID,
+                user_id: sessionService.get('user_id')
+            },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).success(function(data) {
+            $scope.PLAYPAUSE=$filter('filter')(data.MatchMarket, { Id: $scope.MarketId })[0].IsPlay;
         });
     }
     $scope.playpse = $interval(function () {
-                    //Display the current time.
-       $scope.GetScore();
+        //Display the current time.
+        $scope.GetScore();
     }, 8000);
 
+    $scope.getFancyPerSecond = function() {
+        $interval(function (){
+            $http.get("http://13.234.26.15:8080/fancy?sportid=" + $scope.SPORTID + "&eventid=" + $scope.MatchId).then(function successCallback(response){
+                $scope.apiFancy = response.data.result;
+            }).then(function(apiFancy){
+                $http.get("Lstsavemstrcontroller/GetFancyOnHeader/"+$stateParams.MatchId).then(function successCallback(response){
+                    $scope.fancyFromDb = response.data.getFancy;
+                    $scope.apiFancy.find(function(item,index){
+                        if($scope.fancyFromDb.length >0){
+                            var fileterVal = $filter('filter')($scope.fancyFromDb, { marketId: item.id })[0];
+                            if(fileterVal != angular.isUndefinedOrNull){
+                                item.selected=true;
+                            }else{
+                                item.selected=false;
+                                if(item.btype == "LINE") {
+                                    $scope.saveFancyInit(item).then(function(msg) {
+                                        item.selected = true;
+                                    });
+                                }
+                            }
+                        }else{
+                            item.selected=false;
+                            if(item.btype == "LINE") {
+                                $scope.saveFancyInit(item).then(function(msg) {
+                                    item.selected = true;
+                                });
+                            }
+                        }
+                    });
+                });
+            });
+        }, 3000);
+    };
+
+    $scope.saveFancyInit = function (FancyData) {
+        // debugger;
+        if(FancyData.runners[0].back.length == 0 || FancyData.runners[0].back[0].price==100){
+            var PointDiff=10;
+        }else{
+            var PointDiff= 100 - parseInt(FancyData.runners[0].back[0].price);
+        }
+
+        var ipYes = 100;
+        var rangeYes = 100;
+        if(FancyData.runners.length > 0) {
+            if(FancyData.runners[0].back.length > 0) {
+                ipYes = FancyData.runners[0].back[0].line;
+                rangeYes = FancyData.runners[0].back[0].price;
+            }
+        }
+
+        var ipNo = 100;
+        var rangeNo = 100;
+        if(FancyData.runners.length > 0) {
+            if(FancyData.runners[0].lay.length > 0) {
+                ipNo = FancyData.runners[0].lay[0].line;
+                rangeNo = FancyData.runners[0].lay[0].price;
+            }
+        }
+
+        var formData = {
+            HeadName: FancyData.name,
+            remarks: 'N/A',
+            mid: $stateParams.MatchId,
+            fancyType: 2,
+            date: FancyData.lastUpdateTime,
+            time: FancyData.lastUpdateTime,
+            inputYes: ipYes,
+            inputNo: ipNo,
+            sid:FancyData.eventTypeId,
+            NoLayRange: rangeNo,
+            YesLayRange: rangeYes,
+            RateDiff:1,
+            MaxStake:9999999999999,
+            PointDiff:PointDiff,
+            marketId: FancyData.id,
+            isApi : 1,
+        }
+        var url = BASE_URL + "Createmastercontroller/SaveFancy";
+        return $http.post(url, formData).success(function (response) {
+            console.log(response.message);
+        });
+
+    }
+
+    $scope.getFancyPerSecond();
 
 
     $scope.countdown = function() {
-        debugger;
         //stopped = $timeout(function() {
-            $http.get("http://13.233.205.216/gulshan.php?sportid=4" + $scope.SPORTID + "&eventid=" + $scope.MatchId).then(function successCallback(response){          
-                $scope.apiFancy = response.data;
-            }).then(function(apiFancy){
-                $scope.FancyArray = { "items": [] };                                
-                $http.get("Lstsavemstrcontroller/GetFancyOnHeader/"+$stateParams.MatchId).then(function successCallback(response){                           
-                    $scope.FancyFromDb = response.data.getFancy;               
-                    /*Filter The Fancy api to Db*/
-                    $scope.apiFancy.result.find(function(item,index){                    
-                        if($scope.FancyFromDb.length >0){
-                            var fileterVal = $filter('filter')($scope.FancyFromDb, { marketId: item.id })[0];
-                            if( fileterVal != angular.isUndefinedOrNull && item.btype =='LINE'){                                
-                               $scope.FancyArray.items.push({
-                                    id : fileterVal.ID,
-                                    marketId : item.id,
-                                    name : item.name,
-                                    backLine: item.runners[0].back[0].line,
-                                    backPrice: item.runners[0].back[0].price,
-                                    layLine: item.runners[0].lay[0].line,
-                                    layPrice: item.runners[0].lay[0].price,
-                                    status: item.status,
-                                    maxLiabilityPerBet: item.maxLiabilityPerBet,
-                                    maxLiabilityPerMarket: item.maxLiabilityPerMarket,
-                                    betDelay: item.betDelay,
-                                    isBettable: item.isBettable,
-                                    statusLabel:item.statusLabel                                
-                               });
+        $http.get("http://13.234.26.15:8080/fancy?sportid=" + $scope.SPORTID + "&eventid=" + $scope.MatchId).then(function successCallback(response){
+            $scope.apiFancy = response.data;
+        }).then(function(apiFancy){
+            $scope.FancyArray = { "items": [] };
+            $http.get("Lstsavemstrcontroller/GetFancyOnHeader/"+$stateParams.MatchId).then(function successCallback(response){
+                $scope.FancyFromDb = response.data.getFancy;
+                /*Filter The Fancy api to Db*/
+                $scope.apiFancy.result.find(function(item,index){
+                    if($scope.FancyFromDb.length >0){
+                        var fileterVal = $filter('filter')($scope.FancyFromDb, { marketId: item.id })[0];
+                        if( fileterVal != angular.isUndefinedOrNull && item.btype =='LINE'){
+
+                            var backLine = "";
+                            if(item.runners.length > 0) {
+                                if(item.runners[0].back.length > 0) {
+                                    backLine = item.runners[0].back[0].line;
+                                }
                             }
-                        }                     
-                    });
-                    /*Filter The Fancy api to Db*/
-                     updateFancy();     
-                });                                                    
+
+                            var backPrice = "";
+                            if(item.runners.length > 0) {
+                                if(item.runners[0].back.length > 0) {
+                                    backPrice = item.runners[0].back[0].price;
+                                }
+                            }
+
+                            var layLine = "";
+                            if(item.runners.length > 0) {
+                                if(item.runners[0].lay.length > 0) {
+                                    layLine = item.runners[0].lay[0].line;
+                                }
+                            }
+
+                            var layPrice = "";
+                            if(item.runners.length > 0) {
+                                if(item.runners[0].lay.length > 0) {
+                                    layPrice = item.runners[0].lay[0].price;
+                                }
+                            }
+
+
+                            $scope.FancyArray.items.push({
+                                id : fileterVal.ID,
+                                marketId : item.id,
+                                name : item.name,
+                                backLine: backLine,
+                                backPrice: backPrice,
+                                layLine: layLine,
+                                layPrice: layPrice,
+                                status: item.status,
+                                maxLiabilityPerBet: item.maxLiabilityPerBet,
+                                maxLiabilityPerMarket: item.maxLiabilityPerMarket,
+                                betDelay: item.betDelay,
+                                isBettable: item.isBettable,
+                                statusLabel:item.statusLabel
+                            });
+                        }
+                    }
+                });
+                /*Filter The Fancy api to Db*/
+                updateFancy();
             });
-            //$scope.countdown();
-       // }, 10000);
+        });
+        //$scope.countdown();
+        // }, 10000);
     };
+
+
+
     function updateFancy(){
-        fancyTimer = $timeout(function (){            
-            $http.get("http://13.233.205.216/gulshan.php?sportid=" + $scope.SPORTID + "&eventid=" + $scope.MatchId).then(function successCallback(response){
+        fancyTimer = $timeout(function (){
+            $http.get("http://13.234.26.15:8080/fancy?sportid=" + $scope.SPORTID + "&eventid=" + $scope.MatchId).then(function successCallback(response){
                 $scope.apiFancy = response.data;
-                if($scope.apiFancy.result.length >0){                                   
+                if($scope.apiFancy.result.length >0){
                     for (var i = 0; i < $scope.apiFancy.result.length; i++) {
-                       var fileterVal = $filter('filter')($scope.FancyArray.items, { marketId: $scope.apiFancy.result[i].id })[0];
+                        var fileterVal = $filter('filter')($scope.FancyArray.items, { marketId: $scope.apiFancy.result[i].id })[0];
                         if( fileterVal != angular.isUndefinedOrNull && $scope.apiFancy.result[i].btype =='LINE'){
                             $scope.FancyArray.items.filter(function(item){
                                 if(item.marketId == $scope.apiFancy.result[i].id){
@@ -123,32 +241,32 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                                     item.layLine= $scope.apiFancy.result[i].runners[0].lay[0].line;
                                     item.layPrice= $scope.apiFancy.result[i].runners[0].lay[0].price;
                                     item.status= $scope.apiFancy.result[i].status,
-                                    item.betDelay= $scope.apiFancy.result[i].betDelay;
+                                        item.betDelay= $scope.apiFancy.result[i].betDelay;
                                     item.isBettable= $scope.apiFancy.result[i].isBettable;
                                     item.statusLabel=$scope.apiFancy.result[i].statusLabel;
                                 }
                             });
                         }
                     }
-                }                
+                }
             });
             updateFancy();
         }, 1000);
     }
     $scope.volumeLimit=0;
     $scope.callOddsFunc = function() {
-        var maxloop = 0;       
+        var maxloop = 0;
         var $promise = $http.get('UsereventCntr/getBackLaysOfMarket/' + MarketId + '/' + $stateParams.MatchId);
         $promise.then(function(response) {
-           $scope.MarketDelay=response.data.MarketRunner.isMarketDataDelayed;
-             /*start code for Match Unmatch*/
+            $scope.MarketDelay=response.data.MarketRunner.isMarketDataDelayed;
+            /*start code for Match Unmatch*/
             if($scope.UserData != angular.isUndefinedOrNull){
                 if($filter('filter')($scope.UserData, { IsMatched: '0' }).length >0){
                     $scope.unMatchBets = $filter('filter')($scope.UserData, { IsMatched: '0' });
                     try {
-                        for (var i = 0; i < $scope.unMatchBets.length; i++) {                            
+                        for (var i = 0; i < $scope.unMatchBets.length; i++) {
                             if ($scope.GetMarketBackLayData != angular.isUndefinedOrNull) {
-                                $scope.GetMarketBackLayData.runners.find(function(item, j) {                                    
+                                $scope.GetMarketBackLayData.runners.find(function(item, j) {
                                     if (item.selectionId == $scope.unMatchBets[i].SelectionId && ($scope.GetMarketBackLayData.marketId == $scope.unMatchBets[i].MarketId) && ($scope.unMatchBets[i].MatchId == $stateParams.MatchId) && ($scope.unMatchBets[i].IsMatched == 0)) {
                                         if ($scope.unMatchBets[i].isBack == 0) {
                                             if (item.ex.availableToBack.length != 0 && $scope.unMatchBets[i].Odds <= (item.ex.availableToBack[0].price)) {
@@ -169,9 +287,9 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                                 });
                             }
                         }
-                    } catch (e) {} 
+                    } catch (e) {}
                 }
-            }                                       
+            }
             /*End of the code of Match and unmatch*/
             if ($scope.GetMarketBackLayData == angular.isUndefinedOrNull) {
                 $scope.GetMarketBackLayData = response.data.MarketRunner;
@@ -195,7 +313,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                         try { $scope.GetMarketBackLayData.inplay = response.data.MarketRunner.inplay; } catch (e) { console.log('inplay--');
                             console.log(response.data.MarketRunner); }
                         $scope.GetMarketBackLayData.status = response.data.MarketRunner.status;
-                        matchStatus = response.data.MarketRunner.status;                        
+                        matchStatus = response.data.MarketRunner.status;
                         totalMatch = response.data.MarketRunner.totalMatched;
                         $scope.GetMarketBackLayData.totalMatched = response.data.MarketRunner.totalMatched;
                         if ($scope.GetMarketBackLayData.status == "OPEN" && $scope.GetMarketBackLayData.runners != angular.isUndefinedOrNull && $scope.GetMarketBackLayData.runners.length > 0) { //&& selectedRunner != angular.isUndefinedOrNull
@@ -304,8 +422,8 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                 }else{
                     $http({
                         method: "GET",
-                        url: "http://13.233.205.216/gulshan.php?sportid=" + $scope.SPORTID + "&eventid=" + $scope.MatchId
-                    }).success(function (data) {                       
+                        url: "http://13.234.26.15:8080/fancy?sportid=" + $scope.SPORTID + "&eventid=" + $scope.MatchId
+                    }).success(function (data) {
                         selectedRunner = null;
                         var MarketRunner = $filter('filter')(data.result, { id: $stateParams.MarketId })[0];
                         if (MarketRunner != angular.isUndefinedOrNull ) {
@@ -314,7 +432,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                                 console.log(MarketRunner); }
                             $scope.GetMarketBackLayData.status = MarketRunner.status;
                             matchStatus = MarketRunner.status;
-                            
+
                             totalMatch = MarketRunner.matched;
                             $scope.GetMarketBackLayData.totalMatched = MarketRunner.matched;
                             if ($scope.GetMarketBackLayData.status == "OPEN" && $scope.GetMarketBackLayData.runners != angular.isUndefinedOrNull && $scope.GetMarketBackLayData.runners.length > 0) { //&& selectedRunner != angular.isUndefinedOrNull
@@ -424,7 +542,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                     }).error(function (err) {
                         console.log("err", err)
                     });
-                }                
+                }
                 /*End the code of other api*/
             } else {
                 $scope.GetMarketBackLayData = response.data.MarketRunner;
@@ -434,28 +552,28 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                 matchStatus = response.data.MarketRunner.status;
                 $scope.GetMarketBackLayData.totalMatched = response.data.MarketRunner.totalMatched;
             }
-            marketTimer = $timeout(function() {                
-                if ($scope.GetMarketBackLayData != angular.isUndefinedOrNull) {                    
-                    for (var j = 0; j < maxloop; j++) {                        
+            marketTimer = $timeout(function() {
+                if ($scope.GetMarketBackLayData != angular.isUndefinedOrNull) {
+                    for (var j = 0; j < maxloop; j++) {
                         try { $scope.GetMarketBackLayData.runners[j].ex.availableToBack[0].SELECTED = false; } catch (e) {}
                         try { $scope.GetMarketBackLayData.runners[j].ex.availableToBack[1].SELECTED = false; } catch (e) {}
                         try { $scope.GetMarketBackLayData.runners[j].ex.availableToBack[2].SELECTED = false; } catch (e) {}
                         try { $scope.GetMarketBackLayData.runners[j].ex.availableToLay[0].SELECTED = false; } catch (e) {}
                         try { $scope.GetMarketBackLayData.runners[j].ex.availableToLay[1].SELECTED = false; } catch (e) {}
-                        try { $scope.GetMarketBackLayData.runners[j].ex.availableToLay[2].SELECTED = false; } catch (e) {}                    
+                        try { $scope.GetMarketBackLayData.runners[j].ex.availableToLay[2].SELECTED = false; } catch (e) {}
                     }
                     if ($scope.GetMarketBackLayData.Status != 3) {
                         if ($scope.GetMarketBackLayData.marketId != null) {
-                            $scope.callOddsFunc();                           
+                            $scope.callOddsFunc();
                         }
                     }
                 } else {
-                    $scope.callOddsFunc();                   
+                    $scope.callOddsFunc();
                 }
-            }, 1000);            
+            }, 1000);
             var OnlineStatus = $interval(OnlineStatusChanged, 10000)
-            var updatedOnline = function() {                
-                if (navigator.onLine) {                    
+            var updatedOnline = function() {
+                if (navigator.onLine) {
                     $interval.cancel(Changed);
                     Changed = angular.isUndefinedOrNull;
                     location.reload();
@@ -467,7 +585,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                     if (!$scope.netConn) {
                         $mdDialog.hide();
                         $scope.netConn = true;
-                        $scope.callOddsFunc();                        
+                        $scope.callOddsFunc();
                     }
                 } else {
                     Changed = $interval(updatedOnline, 100)
@@ -487,33 +605,33 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
             }
         });
     }
-    $scope.callOddsCloseMatch = function() {       
+    $scope.callOddsCloseMatch = function() {
         if ($scope.GetMarketBackLayData.status == "CLOSED") {
             var vSelectionID = $filter('filter')($scope.GetMarketBackLayData.runners, { status: "WINNER" })[0].selectionId;
             var selectionName1 = "";
-            if ($scope.RunnerValue != angular.isUndefinedOrNull && $scope.RunnerValue.length > 0 && $scope.RunnerValue[0].length > 0){               
+            if ($scope.RunnerValue != angular.isUndefinedOrNull && $scope.RunnerValue.length > 0 && $scope.RunnerValue[0].length > 0){
                 selectionName1 = $filter('filter')($scope.RunnerValue, { SelectionId: vSelectionID })[0].selectionName;
                 if (selectionName1 != "")
-                    $scope.saveMatchoddsResult($scope.MatchId, $scope.GetMarketInfo.SportID, $scope.MarketId, vSelectionID, 1, $scope.GetMarketInfo.SportName, $stateParams.matchName, $scope.GetMarketInfo.MarketName, selectionName1);                
+                    $scope.saveMatchoddsResult($scope.MatchId, $scope.GetMarketInfo.SportID, $scope.MarketId, vSelectionID, 1, $scope.GetMarketInfo.SportName, $stateParams.matchName, $scope.GetMarketInfo.MarketName, selectionName1);
             } else {
                 $http.get('Geteventcntr/getSelectionName/' + $scope.MarketId + '/' + $scope.MatchId).success(function(data, status, headers, config) {
                     selectionName1 = $filter('filter')(data.RunnerValue, { selectionId: vSelectionID })[0].selectionName;
-                    if (selectionName1 != "")                        
+                    if (selectionName1 != "")
                         $scope.saveMatchoddsResult($scope.MatchId, $scope.GetMarketInfo.SportID, $scope.MarketId, vSelectionID, 1, $scope.GetMarketInfo.SportName, $stateParams.matchName, $scope.GetMarketInfo.MarketName, selectionName1);
                 });
-            }   
+            }
         }else if ($scope.MatchResult == "CLOSED") {
             $scope.GetMarketBackLayData.status = "CLOSED";
             $timeout.cancel(marketTimer);
             marketTimer = angular.isUndefinedOrNull;
             $rootScope.$broadcast('changeSidebar_Market', {});
-            if (sessionService.get('type') == "3")
-                $state.go('userDashboard.Home');
+            //if (sessionService.get('type') == "3")
+                //$state.go('userDashboard.Home');
         }
 
     };
     $scope.getOddValue = function(item, priceVal, matchId, back_layStatus, placeName, selectionId) {
-       
+
         $scope.UserTypeId = sessionService.get('type');
         $scope.UserId = sessionService.get('slctUseID');
         $scope.ParantId = sessionService.get('slctParantID');
@@ -578,13 +696,13 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         $scope.acc = 0;
         $scope.stake = 0;
     };
-    $scope.GetUserData=function(){       
+    $scope.GetUserData=function(){
         $http.get('Betentrycntr/GatBetData/' + $stateParams.MarketId + '/' + sessionService.get('type') + '/' + sessionService.get('user_id') + '/' + $stateParams.MatchId).success(function(data, status, headers, config) {
             $scope.UserData = data.betUserData;
         });
     }
     $scope.GetUserData();
-    $scope.getApiFrom = function(MarketId, MatchId) {       
+    $scope.getApiFrom = function(MarketId, MatchId) {
         $scope.btnPlaceDis = true;
         $scope.MarketId = $stateParams.MarketId;
         $scope.UserTypeId = sessionService.get('type');
@@ -598,25 +716,25 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         var priceVal = $scope.priceVal;
         var stake = $scope.stake;
         var placeName = document.getElementById('placeName').value;
-        get_userser.get_OddsFromApi($stateParams.MarketId, selectionId, MatchId, isback,$scope.MarketDelay,$stateParams.sportId, function(response) {           
+        get_userser.get_OddsFromApi($stateParams.MarketId, selectionId, MatchId, isback,$scope.MarketDelay,$stateParams.sportId, function(response) {
             $scope.ApiOddsValue = response.oddsValue;
             var chkValPrice = $scope.ApiOddsValue;
             var P_and_l = 0,
                 P_and_lLB = 0;
             if (isback == 0) {
                 if (priceVal <= $scope.ApiOddsValue) {
-                    isMatched = 1; 
+                    isMatched = 1;
                     priceVal = $scope.ApiOddsValue;
-                } else { 
+                } else {
                     isMatched = 0;
                     priceVal = priceVal;
                     $scope.oldPnLValue = 0;
                 }
             } else {
-                if (priceVal >= $scope.ApiOddsValue) { 
+                if (priceVal >= $scope.ApiOddsValue) {
                     isMatched = 1;
                     priceVal = $scope.ApiOddsValue;
-                } else { 
+                } else {
                     isMatched = 0;
                     priceVal = priceVal;
                     $scope.oldPnLValue = 0;
@@ -625,69 +743,69 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
             if (deviceDetector.device == 'unknown')
                 var DIVICE = 'Desktop';
             else
-                var DIVICE = deviceDetector.device;                      
+                var DIVICE = deviceDetector.device;
             P_and_l = (priceVal * stake) - stake;
             var deviceInformation = " browser: " + deviceDetector.browser + " browser_version :" + deviceDetector.browser_version + "  device: " + DIVICE + "  OS : " + deviceDetector.os + " os_version: " + deviceDetector.os_version;
             $scope.formData = { userId: sessionService.get('slctUseID'),ParantId: ParantId,loginId: loginId,selectionId: selectionId,matchId: $stateParams.MatchId,isback: isback,stake: stake,priceVal: priceVal,p_l: P_and_l,MarketId: MarketId,isMatched: isMatched,UserTypeId: $scope.UserTypeId,placeName: placeName,MatchName: $stateParams.matchName,deviceInfo: deviceInformation,inplay: response.inplay,ApiVal: 0 }
             $scope.getCheckLimitorVal($scope.formData);
-                if ($scope.gtTypeId == 3) {
-                    $http({
-                        method: 'POST',
-                        url: 'Betentrycntr/Save_bet/',
-                        data: $scope.formData,
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                    }).success(function(data) {
-                        $scope.GetUserData();
-                        $rootScope.$broadcast('updateBal', {});
-                        $scope.loadingM = false;
-                        if (data.error >= 0) {
-                                $scope.displayTable1=false;
-                                $scope.priceVal = 0;
-                                $scope.stake = 0;
-                                $scope.acc = false;
-                                $scope.btnPlaceDis = false;
-                                if(isMatched==0){
-                                    Dialog.show("Oops you missed this...");
-                                }else{
-                                    Dialog.autohide(data.message);
-                                }                                
-                                $scope.loading = false;
-                                $rootScope.$broadcast('changeText', {});
-                                $scope.RunnerValue = data.RunnerValue;
-                                if ($scope.gtTypeId == 3) {
-                                    $scope.UserId = sessionService.get('slctUseID');
-                                    get_userser.GetWALLibiInfo($scope.UserId);
-                                    $scope.acc = 0;
-                                } else {
-                                    $scope.UserId = sessionService.get('user_id');
-                                    get_userser.GetWALLibiInfo($scope.UserId);
-                                    $scope.acc = 0;
-                                }
-                        } else if (data.error < 0) {
-                            $scope.displayTable1=false;
-                            alert('' + data.message);
-                            $scope.btnPlaceDis = false;
-                            $scope.loading = false;
-                            $scope.loadingM = false;
+            if ($scope.gtTypeId == 3) {
+                $http({
+                    method: 'POST',
+                    url: 'Betentrycntr/Save_bet/',
+                    data: $scope.formData,
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                }).success(function(data) {
+                    $scope.GetUserData();
+                    $rootScope.$broadcast('updateBal', {});
+                    $scope.loadingM = false;
+                    if (data.error >= 0) {
+                        $scope.displayTable1=false;
+                        $scope.priceVal = 0;
+                        $scope.stake = 0;
+                        $scope.acc = false;
+                        $scope.btnPlaceDis = false;
+                        if(isMatched==0){
+                            Dialog.show("Oops you missed this...");
+                        }else{
+                            Dialog.autohide(data.message);
+                        }
+                        $scope.loading = false;
+                        $rootScope.$broadcast('changeText', {});
+                        $scope.RunnerValue = data.RunnerValue;
+                        if ($scope.gtTypeId == 3) {
+                            $scope.UserId = sessionService.get('slctUseID');
+                            get_userser.GetWALLibiInfo($scope.UserId);
+                            $scope.acc = 0;
+                        } else {
+                            $scope.UserId = sessionService.get('user_id');
+                            get_userser.GetWALLibiInfo($scope.UserId);
                             $scope.acc = 0;
                         }
-                    });
-                    $scope.GetUserData();
-                }else if($scope.gtTypeId != 3){
-                    $scope.displayTable1=false;
-                    alert("Invalid user");
-                    $scope.btnPlaceDis = false;
-                    $scope.loading = false;
-                    $scope.loadingM = false; 
-                }else if(isMatched==0){
-                    $scope.displayTable1=false;
-                    alert("Rate Change...");
-                    $scope.btnPlaceDis = false;
-                    $scope.loading = false;
-                    $scope.loadingM = false;
-                    $scope.acc = 0;
-                }  
-            });
+                    } else if (data.error < 0) {
+                        $scope.displayTable1=false;
+                        alert('' + data.message);
+                        $scope.btnPlaceDis = false;
+                        $scope.loading = false;
+                        $scope.loadingM = false;
+                        $scope.acc = 0;
+                    }
+                });
+                $scope.GetUserData();
+            }else if($scope.gtTypeId != 3){
+                $scope.displayTable1=false;
+                alert("Invalid user");
+                $scope.btnPlaceDis = false;
+                $scope.loading = false;
+                $scope.loadingM = false;
+            }else if(isMatched==0){
+                $scope.displayTable1=false;
+                alert("Rate Change...");
+                $scope.btnPlaceDis = false;
+                $scope.loading = false;
+                $scope.loadingM = false;
+                $scope.acc = 0;
+            }
+        });
     }
     $scope.place_bet = function() {
         $http({ method: 'POST',url: 'UsereventCntr/matchMarketLst/', data: { matchId: $stateParams.MatchId,sportsId: $stateParams.sportId,user_id: sessionService.get('user_id')}, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function(data) {
@@ -695,59 +813,59 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
             if($scope.PLAYPAUSE==0 && $scope.stake >=1000){
                 $scope.loadingM = true;
                 $http.get('Chipscntrl/checkDeduction/' + sessionService.get('user_id')+"/"+$stateParams.MatchId).then(function(articles){
-                   
+
                     return parseInt(articles.data.chkcnt[0].numb);
                 }).then(function(cnt){
-                    
+
                     if(cnt==0){
                         $http.get('Chipscntrl/getChipDataById/' + sessionService.get('user_id')).success(function(data, status, headers, config) {
-                                
-                                var cipsData = data.betLibility;
-                                $scope.sessionLiability = -1*parseFloat(cipsData[0].sessionLiability).toFixed(2);
-                                $scope.GET_BALANCE=parseFloat(cipsData[0].Balance).toFixed(2);
-                                /*start code cut balance*/
-                                $http.get('Betentrycntr/PointValue/'+sessionService.get('user_id')).success(function (data, status, headers, config) { 
-                                    
-                                       //$scope.PointValue = parseInt(data.GetPoint[0].value);
-                                       if(data.GetPoint.length==0){
-                                            $scope.PointValue=0;
-                                        }else{
-                                             $scope.PointValue = parseFloat(data.GetPoint[0].value);
-                                        }
-                                        //$scope.message=data.message;
-                                        if($scope.GET_BALANCE>=$scope.PointValue){
-                                            var userID = sessionService.get('user_id');
-                                            var userType = sessionService.get('type');
-                                            
-                                            var ChipData={
-                                                UserName: sessionService.get('slctUseName'),
-                                                UserId: userID,
-                                                userType: userType,
-                                                ChpsVal: $scope.PointValue,
-                                                MatchID: $stateParams.MatchId,
-                                                MatchName: $stateParams.matchName,
-                                            };
-                                            $http({
-                                                method: 'POST',
-                                                url: 'Chipscntrl/SaveChipAc/',
-                                                data: ChipData,
-                                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                                            }).success(function (data) {
-                                                $scope.TOTAL_LIABILITY=-1*(parseFloat(cipsData[0].sessionLiability)+parseFloat(cipsData[0].unmatchliability));
-                                                    
-                                            });
 
-                                        }else{
-                                            Dialog.show('Insufficient Balance1234');
-                                            $scope.stake = 0;
-                                            $scope.btnPlaceDis = false;
-                                            
-                                            $scope.loadingM = false;
-                                            return;
+                            var cipsData = data.betLibility;
+                            $scope.sessionLiability = -1*parseFloat(cipsData[0].sessionLiability).toFixed(2);
+                            $scope.GET_BALANCE=parseFloat(cipsData[0].Balance).toFixed(2);
+                            /*start code cut balance*/
+                            $http.get('Betentrycntr/PointValue/'+sessionService.get('user_id')).success(function (data, status, headers, config) {
 
-                                        }
-                                });
-                                /*End of code to cut Balance*/
+                                //$scope.PointValue = parseInt(data.GetPoint[0].value);
+                                if(data.GetPoint.length==0){
+                                    $scope.PointValue=0;
+                                }else{
+                                    $scope.PointValue = parseFloat(data.GetPoint[0].value);
+                                }
+                                //$scope.message=data.message;
+                                if($scope.GET_BALANCE>=$scope.PointValue){
+                                    var userID = sessionService.get('user_id');
+                                    var userType = sessionService.get('type');
+
+                                    var ChipData={
+                                        UserName: sessionService.get('slctUseName'),
+                                        UserId: userID,
+                                        userType: userType,
+                                        ChpsVal: $scope.PointValue,
+                                        MatchID: $stateParams.MatchId,
+                                        MatchName: $stateParams.matchName,
+                                    };
+                                    $http({
+                                        method: 'POST',
+                                        url: 'Chipscntrl/SaveChipAc/',
+                                        data: ChipData,
+                                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                                    }).success(function (data) {
+                                        $scope.TOTAL_LIABILITY=-1*(parseFloat(cipsData[0].sessionLiability)+parseFloat(cipsData[0].unmatchliability));
+
+                                    });
+
+                                }else{
+                                    Dialog.show('Insufficient Balance1234');
+                                    $scope.stake = 0;
+                                    $scope.btnPlaceDis = false;
+
+                                    $scope.loadingM = false;
+                                    return;
+
+                                }
+                            });
+                            /*End of code to cut Balance*/
                         });
 
                     }
@@ -774,7 +892,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
             }
         });
     };
-    
+
     $scope.saveMatchoddsResult = function(Match_id, Sport_id, market_id, selectionId, model_result, spartName, matchName, MarketName, selectionName) {
         var marketData = {
             Sport_id: Sport_id,
@@ -794,9 +912,9 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
             .success(function(data) {
                 try {
                     $scope.message = data.status.message;
-                   
+
                     //$rootScope.$broadcast('changeSidebar_Market', {});
-                     $scope.PLAYPAUSE=$filter('filter')(data.MatchMarket, { Id: $scope.MarketId })[0].IsPlay;                                   
+                    $scope.PLAYPAUSE=$filter('filter')(data.MatchMarket, { Id: $scope.MarketId })[0].IsPlay;
                     // if (sessionService.get('type') == "1")
                     //     $state.go('dashboard.Masterdashboard');
                     // else if (sessionService.get('type') == "2")
@@ -811,18 +929,18 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         var user_type = sessionService.get('slctUseTypeID');
         //
         $http.get('Geteventcntr/getBackLaysOfMarketSelectionName/' + $scope.MarketId + '/' + user_id + '/' + user_type + '/' + $scope.MatchId).success(function(data, status, headers, config) ///sourabh 161226 change
-            {
-                //
-                if (data.runnerSlName != angular.isUndefinedOrNull && data.runnerSlName.length > 0)
-                    $scope.GetMarketBackLayDataSelectionName = data.runnerSlName[0].runners;
-                if (data.RunnerValue != angular.isUndefinedOrNull && data.RunnerValue.length != 0)
-                    $scope.RunnerValue = data.RunnerValue;
-                else
-                    $scope.RunnerValue = [{}];
+        {
+            //
+            if (data.runnerSlName != angular.isUndefinedOrNull && data.runnerSlName.length > 0)
+                $scope.GetMarketBackLayDataSelectionName = data.runnerSlName[0].runners;
+            if (data.RunnerValue != angular.isUndefinedOrNull && data.RunnerValue.length != 0)
+                $scope.RunnerValue = data.RunnerValue;
+            else
+                $scope.RunnerValue = [{}];
 
-                if (data.MarketData != angular.isUndefinedOrNull && data.MarketData.length != 0)
-                    $scope.GetMarketInfo = data.MarketData[0];
-            });
+            if (data.MarketData != angular.isUndefinedOrNull && data.MarketData.length != 0)
+                $scope.GetMarketInfo = data.MarketData[0];
+        });
     }
     $scope.getSumValPnL = function(a, b) {
         if(a==angular.isUndefinedOrNull && b==angular.isUndefinedOrNull){
@@ -836,17 +954,17 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
     var totalMatch = 0;
     var selectedRunner = null;
     $scope.$on("$destroy", function(event) {
-    $interval.cancel($scope.stopScore);
-    $interval.cancel($scope.playpse);
+        $interval.cancel($scope.stopScore);
+        $interval.cancel($scope.playpse);
         $timeout.cancel($scope.callOddsFunc);
         $scope.callOddsFunc = angular.isUndefinedOrNull;
     });
-    
+
     $scope.stakeValReset = function(val) { //sourabh 15-nov-2016
         $scope.stake = parseInt(val);
     };
     $scope.getCalculation = function(priceVal, stake) {
-      
+
         if (stake == angular.isUndefinedOrNull) {
             stake = 0;
         } else {
@@ -959,7 +1077,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         }
     }
     $scope.checkStakeLimit = function(formdata) {
-       
+
         if ($scope.viewUserAc1 == angular.isUndefinedOrNull) {
             $scope.cValid = false;
             return false;
@@ -1051,14 +1169,14 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
     $scope.countdown();
     $scope.$on("$destroy", function(event) {
         $timeout.cancel(marketTimer);
-         $timeout.cancel(stopped);
+        $timeout.cancel(stopped);
         marketTimer = angular.isUndefinedOrNull;
     });
     /*start code for Fancy*/
     $scope.$on("$destroy", function(event) {
         $interval.cancel($scope.si_getMatchUnmatchData);
         $scope.si_getMatchUnmatchData = angular.isUndefinedOrNull;
-    }); 
+    });
     $scope.showSessionFancy = function(fanctTypeId, fanctId) {
         $scope.sessionFancy = fanctId;
         $scope.sessionFancyType = fanctTypeId;
@@ -1069,14 +1187,13 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         });
     }
     $scope.fancyBetSlip = function(event,line,price,Fancy,isFancy,isBack) {
-        debugger;
-       $scope.betslipArray={};
-       if(isBack==0){
+        $scope.betslipArray={};
+        if(isBack==0){
             backlayName ="Back";
-       }else{
+        }else{
             backlayName ="Lay";
-       }      
-       $scope.betslipArray={ id: Fancy.id,name : Fancy.name, backLine: Fancy.backLine, backPrice : Fancy.backPrice, layLine: Fancy.layLine, layPrice : Fancy.layPrice,status : Fancy.status, maxLiabilityPerBet : Fancy.maxLiabilityPerBet,maxLiabilityPerMarket: Fancy.maxLiabilityPerMarket,betDelay : Fancy.betDelay,isBettable: Fancy.isBettable,statusLabel: Fancy.statusLabel,isFancy: isFancy,betslip: true,backlayName : backlayName,isBack : isBack,line: line,price: price,stack: 0,marketId:Fancy.marketId }
+        }
+        $scope.betslipArray={ id: Fancy.id,name : Fancy.name, backLine: Fancy.backLine, backPrice : Fancy.backPrice, layLine: Fancy.layLine, layPrice : Fancy.layPrice,status : Fancy.status, maxLiabilityPerBet : Fancy.maxLiabilityPerBet,maxLiabilityPerMarket: Fancy.maxLiabilityPerMarket,betDelay : Fancy.betDelay,isBettable: Fancy.isBettable,statusLabel: Fancy.statusLabel,isFancy: isFancy,betslip: true,backlayName : backlayName,isBack : isBack,line: line,price: price,stack: 0,marketId:Fancy.marketId }
     };
     $scope.checkValidation = function(sessionData,checkValidation) { //sourabh 170125
         if (sessionData.betValue == "" || sessionData.betValue <= 0) {
@@ -1087,19 +1204,19 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
             return false;
         }
         return true;
-    }           
+    }
     $scope.FancyVal=function(val,stack,btnStatus){
-       if(stack == angular.isUndefinedOrNull)
+        if(stack == angular.isUndefinedOrNull)
             stack=0;
         var sumOfVal = parseInt(val) + parseInt(stack);
         if(btnStatus==1){
-           $scope.betslipArray.stack = parseInt(sumOfVal); 
+            $scope.betslipArray.stack = parseInt(sumOfVal);
         }else{
-            $scope.betslipArray.stack = parseInt(sumOfVal); 
+            $scope.betslipArray.stack = parseInt(sumOfVal);
         }
     }
-    $scope.saveSessionBet = function(pointDiff,FancyData,IndexVal) { 
-       
+    $scope.saveSessionBet = function(pointDiff,FancyData,IndexVal) {
+
         $(".betOverlaypre"+IndexVal).show();
         $(".betOverlaypre"+IndexVal).addClass('betOverlay');
         var HeadName = FancyData.HeadName;
@@ -1142,32 +1259,32 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
             pointDiff: pointDiff,
             deviceInformation: deviceInformation
         }
-        if(amount >= 1){
+        if(amount >= 10){
             if ($scope.checkValidation(sessionData,IndexVal)) {
                 /*start code for bet delay*/
                 get_userser.getBetDelay(sessionService.get('slctUseID'), function(data) {
                     var BetDelay = (1 * 1000);
                     $timeout(function() {
-                    $http({ method: 'POST',url: BASE_URL + 'Lstsavemstrcontroller/save_session_bet',data: sessionData,headers: { 'Content-Type': 'application/x-www-form-urlencoded' }}).success(function(data) {
-                        $scope.showOdd1 = false;
-                        if(data.error>=0){                                
-                            get_userser.GetWALLibiInfo(sessionService.get('slctUseID'));
-                            Dialog.autohide(data.message);
-                            $scope.openfancy = {};
-                            $(".betOverlaypre"+IndexVal).hide();
-                            $(".betOverlaypre"+IndexVal).removeClass('betOverlay');
-                            $scope.GetUserData();
-                        }else if(data.error < 0){                                
-                            Dialog.autohide(data.message);
-                            $scope.openfancy = {};
-                            $(".betOverlaypre"+IndexVal).hide();
-                            $(".betOverlaypre"+IndexVal).removeClass('betOverlay');
-                        }
-                    });
-                }, BetDelay);
-                    
+                        $http({ method: 'POST',url: BASE_URL + 'Lstsavemstrcontroller/save_session_bet',data: sessionData,headers: { 'Content-Type': 'application/x-www-form-urlencoded' }}).success(function(data) {
+                            $scope.showOdd1 = false;
+                            if(data.error>=0){
+                                get_userser.GetWALLibiInfo(sessionService.get('slctUseID'));
+                                Dialog.autohide(data.message);
+                                $scope.openfancy = {};
+                                $(".betOverlaypre"+IndexVal).hide();
+                                $(".betOverlaypre"+IndexVal).removeClass('betOverlay');
+                                $scope.GetUserData();
+                            }else if(data.error < 0){
+                                Dialog.autohide(data.message);
+                                $scope.openfancy = {};
+                                $(".betOverlaypre"+IndexVal).hide();
+                                $(".betOverlaypre"+IndexVal).removeClass('betOverlay');
+                            }
+                        });
+                    }, BetDelay);
+
                 });
-                /*end the code of betdelay*/                        
+                /*end the code of betdelay*/
             }
         }else{
             var message="Min Bet 10";
@@ -1178,87 +1295,86 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         }
     };
     $scope.placeFancyBet=function(){
-        debugger;
-         $scope.fancybetloader=true;
+        // debugger;
+        $scope.fancybetloader=true;
         //get_userser.getBetDelay(sessionService.get('slctUseID'), function(data) {
-                   // var BetDelay = (parseInt(data) * 1000);
-            fancyTimer = $timeout(function (){                 
-                $http.get("http://13.233.205.216/gulshan.php?sportid=4&eventid="+$stateParams.MatchId).then(function successCallback(response){
-                    debugger;
-                    var marketOdds=response.data;        
-                    var resltArray = $filter('filter')(marketOdds.result, { id: $scope.betslipArray.marketId });
-                    if($scope.betslipArray.isBack==1 && resltArray[0].statusLabel==""){
-                       if(resltArray[0].runners[0].lay[0].line == $scope.betslipArray.line && resltArray[0].runners[0].lay[0].price == $scope.betslipArray.price){
-                            var line=resltArray[0].runners[0].lay[0].line;
-                            var price=resltArray[0].runners[0].lay[0].price;
-                            return true;
-                       }else{
-                            alert("Price or Line change", "Bet not Placed.Try Again...");
-                            $scope.fancybetloader=false;
-                            // return false;
-                       }                        
-                    }else if( $scope.betslipArray.isBack==0 && resltArray[0].statusLabel==""){
-                        if(resltArray[0].runners[0].back[0].line == $scope.betslipArray.line && resltArray[0].runners[0].back[0].price == $scope.betslipArray.price){
-                            var line=resltArray[0].runners[0].back[0].line;
-                            var price=resltArray[0].runners[0].back[0].price;
-                            return true;
-                        }else{
-                            alert("Price or Line change", "Bet not Placed.Try Again...");
-                            $scope.fancybetloader=false;
-                            // return false; 
-                        }
+        // var BetDelay = (parseInt(data) * 1000);
+        fancyTimer = $timeout(function (){
+            $http.get("http://13.234.26.15:8080/fancy?sportid=4&eventid="+$stateParams.MatchId).then(function successCallback(response){
+                var marketOdds=response.data;
+                var resltArray = $filter('filter')(marketOdds.result, { id: $scope.betslipArray.marketId });
+                if($scope.betslipArray.isBack==1 && resltArray[0].statusLabel==""){
+                    if(resltArray[0].runners[0].lay[0].line == $scope.betslipArray.line && resltArray[0].runners[0].lay[0].price == $scope.betslipArray.price){
+                        var line=resltArray[0].runners[0].lay[0].line;
+                        var price=resltArray[0].runners[0].lay[0].price;
+                        return true;
                     }else{
-                        alert("Sorry You Can not Bet , Fancy status is "+resltArray[0].statusLabel);
+                        alert("Price or Line change", "Bet not Placed.Try Again...");
                         $scope.fancybetloader=false;
-                        // return false; 
+                        // return false;
                     }
-                }).then(function(status){                
-                    if(status==true){
-                        if($scope.betslipArray.isBack==0){
-                            if($scope.betslipArray.price !=100)
+                }else if( $scope.betslipArray.isBack==0 && resltArray[0].statusLabel==""){
+                    if(resltArray[0].runners[0].back[0].line == $scope.betslipArray.line && resltArray[0].runners[0].back[0].price == $scope.betslipArray.price){
+                        var line=resltArray[0].runners[0].back[0].line;
+                        var price=resltArray[0].runners[0].back[0].price;
+                        return true;
+                    }else{
+                        alert("Price or Line change", "Bet not Placed.Try Again...");
+                        $scope.fancybetloader=false;
+                        // return false;
+                    }
+                }else{
+                    alert("Sorry You Can not Bet , Fancy status is "+resltArray[0].statusLabel);
+                    $scope.fancybetloader=false;
+                    // return false;
+                }
+            }).then(function(status){
+                if(status==true){
+                    if($scope.betslipArray.isBack==0){
+                        if($scope.betslipArray.price !=100)
                             var pointDiff= Math.abs($scope.betslipArray.price-100);
-                            else
-                            var pointDiff=10;
-                        }else if($scope.betslipArray.isBack==1){
-                            if($scope.betslipArray.price !=100)
-                                var pointDiff= Math.abs($scope.betslipArray.price-100);
-                            else
-                                var pointDiff=10; 
-                        }                
-                        var SessInptNo = $scope.betslipArray.layLine;
-                        var SessInptYes = $scope.betslipArray.backLine;                        
-                        if ($scope.betslipArray.isBack == 0)
-                            var OddsNumber = SessInptYes;
-                        else 
-                            var OddsNumber = SessInptNo;
-                        if (deviceDetector.device == 'unknown')
-                            var DIVICE = 'Desktop';
                         else
+                            var pointDiff=10;
+                    }else if($scope.betslipArray.isBack==1){
+                        if($scope.betslipArray.price !=100)
+                            var pointDiff= Math.abs($scope.betslipArray.price-100);
+                        else
+                            var pointDiff=10;
+                    }
+                    var SessInptNo = $scope.betslipArray.layLine;
+                    var SessInptYes = $scope.betslipArray.backLine;
+                    if ($scope.betslipArray.isBack == 0)
+                        var OddsNumber = SessInptYes;
+                    else
+                        var OddsNumber = SessInptNo;
+                    if (deviceDetector.device == 'unknown')
+                        var DIVICE = 'Desktop';
+                    else
                         var DIVICE = deviceDetector.device;
-                        var deviceInformation = '"' + " browser: " + deviceDetector.browser + " browser_version :" + deviceDetector.browser_version + "  device: " + DIVICE + "  OS : " + deviceDetector.os + " os_version: " + deviceDetector.os_version + '"';
-                        var sessionData = { userId: sessionService.get('user_id'),ParantId: sessionService.get('slctParantID'),loginId: sessionStorage.user_id,betValue: $scope.betslipArray.stack,FancyID: $scope.betslipArray.id,matchId: $stateParams.MatchId,OddValue: $scope.betslipArray.isBack,type: sessionStorage.type,OddsNumber: OddsNumber,TypeID: 2,HeadName: $scope.betslipArray.name,SessInptNo: SessInptNo,SessInptYes: SessInptYes,sportId: $stateParams.sportId,FancyId: $scope.betslipArray.id,pointDiff: pointDiff,deviceInformation: deviceInformation }
-                        if($scope.betslipArray.stack >= 1000){                    
-                            $http({ method: 'POST',url: BASE_URL + 'Lstsavemstrcontroller/save_session_bet',data: sessionData,headers: { 'Content-Type': 'application/x-www-form-urlencoded' }}).success(function(data) {
-                                if(data.error>=0){ 
-                                     $scope.fancybetloader=false;                                 
-                                    get_userser.GetWALLibiInfo(sessionService.get('slctUseID'));
-                                    Dialog.autohide(data.message); 
-                                    $scope.GetUserData();
-                                }else if(data.error < 0){ 
-                                     $scope.fancybetloader=false;                                 
-                                    Dialog.autohide(data.message);
-                                }
-                            });                       
-                        }else{
-                            $scope.fancybetloader=false;
-                            var message="Min Bet 1000";
-                            $scope.fancybetloader=false;
-                            alert(""+message);                            
-                        }
-                    }             
-                                     
-                });
-            },10);
+                    var deviceInformation = '"' + " browser: " + deviceDetector.browser + " browser_version :" + deviceDetector.browser_version + "  device: " + DIVICE + "  OS : " + deviceDetector.os + " os_version: " + deviceDetector.os_version + '"';
+                    var sessionData = { userId: sessionService.get('user_id'),ParantId: sessionService.get('slctParantID'),loginId: sessionStorage.user_id,betValue: $scope.betslipArray.stack,FancyID: $scope.betslipArray.id,matchId: $stateParams.MatchId,OddValue: $scope.betslipArray.isBack,type: sessionStorage.type,OddsNumber: OddsNumber,TypeID: 2,HeadName: $scope.betslipArray.name,SessInptNo: SessInptNo,SessInptYes: SessInptYes,sportId: $stateParams.sportId,FancyId: $scope.betslipArray.id,pointDiff: pointDiff,deviceInformation: deviceInformation }
+                    if($scope.betslipArray.stack >= 1000){
+                        $http({ method: 'POST',url: BASE_URL + 'Lstsavemstrcontroller/save_session_bet',data: sessionData,headers: { 'Content-Type': 'application/x-www-form-urlencoded' }}).success(function(data) {
+                            if(data.error>=0){
+                                $scope.fancybetloader=false;
+                                get_userser.GetWALLibiInfo(sessionService.get('slctUseID'));
+                                Dialog.autohide(data.message);
+                                $scope.GetUserData();
+                            }else if(data.error < 0){
+                                $scope.fancybetloader=false;
+                                Dialog.autohide(data.message);
+                            }
+                        });
+                    }else{
+                        $scope.fancybetloader=false;
+                        var message="Min Bet 1000";
+                        $scope.fancybetloader=false;
+                        alert(""+message);
+                    }
+                }
+
+            });
+        },10);
         //});
     }
     $scope.deleteUser = function (betId, userId) {
@@ -1274,56 +1390,47 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
             });
         }
     }
-	
-					  $scope.fancyAutoSetToUserPannel = function (ID) {
-          console.log("this is not active")   
-						
-		var url = BASE_URL + "Createmastercontroller/updatefancyAutoSetToUserPannel?ID="+ID;
+
+    $scope.fancyAutoSetToUserPannel = function (ID) {
+        console.log("this is not active")
+
+        var url = BASE_URL + "Createmastercontroller/updatefancyAutoSetToUserPannel?ID="+ID;
         $http.get(url).success(function (response) {
-              $scope.result= response;
-			  console.log("shakti"+$scope.result.error)
-			if($scope.result.error == 0)
-			{
-				  $scope.countdown()
-			}
+            $scope.result= response;
+            console.log("shakti"+$scope.result.error)
+            if($scope.result.error == 0)
+            {
+                $scope.countdown()
+            }
         });
-       
+
     }
-	
-$scope.checkautofancyactive = function () {
+
+    $scope.checkautofancyactive = function () {
         var url = BASE_URL + "Createmastercontroller/checkAutoFancyisActive?MatchId="+$scope.MatchId;
         $http.get(url).success(function (response) {
             $scope.result= response.result;
-         
-		   angular.forEach($scope.result, function(item){
-                //   console.log(item.ID);  
-				   if(item.autoActive == 0)
-				   {
-		           $scope.fancyAutoSetToUserPannel(item.ID)
-     
-				   }
-               })
-        });
-       
-    }
-	
-	
-	
 
-	
-	
+            angular.forEach($scope.result, function(item){
+                //   console.log(item.ID);
+                if(item.autoActive == 0)
+                {
+                    $scope.fancyAutoSetToUserPannel(item.ID)
+
+                }
+            })
+        });
+
+    }
+
     /*$scope.getFancyList = function() {
         get_userser.getSessionFancy($stateParams.MatchId, 4, function(response) {
-            $scope.FancyData = response;            
+            $scope.FancyData = response;
         });
     }
     $scope.getFancyList();*/
 
-	setInterval(function(){
-  
-  $scope.checkautofancyactive();
- 
-      
-
-}, 1000)
+    setInterval(function(){
+        $scope.checkautofancyactive();
+    }, 1000)
 }]);

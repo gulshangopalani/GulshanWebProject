@@ -105,7 +105,7 @@ angular.module('ApsilonApp').controller('UpcomingMatchLstCntr',['$scope', '$http
                try {  $scope.message = data.status.message;console.log("working "+data.status.message); }
                catch (e) { console.log(data.status.error); }
         });
-        console.log("working ");
+        // console.log("working ");
     }
     $scope.getUrl = function (type, matchid, marketid, matchname, matchdate,SportId)//sourabh 161231
     {

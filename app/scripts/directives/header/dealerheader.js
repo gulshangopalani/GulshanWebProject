@@ -13,6 +13,10 @@ app.directive('dealerheader', ['$location','$http', 'sessionService', '$timeout'
                 //event.preventDefault(); 
             });
 
+            $scope.load = function() {
+                onResizeWindow();
+            };
+
             $scope.RedirectToFancy=function(fancyId,TypeID,MatchID,SportID,matchName){
                 $scope.setValue=fancyId;
                 ;
@@ -65,19 +69,33 @@ app.directive('dealerheader', ['$location','$http', 'sessionService', '$timeout'
                 loginService.logout();
             };
             function onResize() {
-                //alert("go to fun");
-                // uncomment for only fire when $window.innerWidth change   
+                // uncomment for only fire when $window.innerWidth change
                 if (scope.width !== $window.innerWidth) {
                     if ($window.width() > 768) {
                         $push.addClass('pushmenu-push-toright');
                         $puslft.addClass('pushmenu-open');
                     } else {
-
+                        $('.second-navbar').addClass('navbar-fixed-bottom');
                         $push.removeClass('pushmenu-push-toright');
                         $puslft.removeClass('pushmenu-open');
                     }
                 }
             };
+
+            function onResizeWindow() {
+                $(document).ready(function () {
+                    $("nav").find("li").on("click", "a", function () {
+                        $('.navbar-collapse.in').collapse('hide');
+                    });
+                });
+                if ($window.innerWidth < 768) {
+                    $('.second-navbar').addClass('navbar-fixed-bottom');
+                } else {
+                    $('.second-navbar').removeClass('navbar-fixed-bottom');
+                }
+            }
+
+            angular.element($window).on('resize', onResizeWindow);
 
         }]
     }

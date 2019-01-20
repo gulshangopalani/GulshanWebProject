@@ -45,7 +45,6 @@ app.controller('Matchlstfrmapicntr', function ($scope, $http, $stateParams, Dial
 
         $http.post(url, formData).success(function (response) {
             //Dialog.autohide(response.message);
-            console.log(response)
 debugger;
             $http.get('Geteventcntr/getMarketOfMatch/' + id)
                 .success(function (data, status, headers, config) {
@@ -112,7 +111,6 @@ debugger;
                     .success(function (data, status, headers, config) {
                         // $scope.loading = false;
                         // Dialog.autohide(data.message);
-                        console.log("saved")
                         // $rootScope.$broadcast('changeSidebar_Market', {});
                     })
             }

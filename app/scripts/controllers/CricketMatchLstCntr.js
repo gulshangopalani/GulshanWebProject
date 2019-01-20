@@ -102,10 +102,9 @@ angular.module('ApsilonApp').controller('CricketMatchLstCntr',['$scope', '$http'
         //$timeout.cancel(marketTimer);
         //marketTimer = angular.isUndefinedOrNull;
         $http({ method: 'POST', url: 'Geteventcntr/SetResult/', data: marketData, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (data) {
-               try {  $scope.message = data.status.message;console.log("working "+data.status.message); }
+               try {  $scope.message = data.status.message; }
                catch (e) { console.log(data.status.error); }
         });
-        console.log("working ");
     }
     $scope.getUrl = function (type, matchid, marketid, matchname, matchdate,SportId)//sourabh 161231
     {

@@ -80,7 +80,7 @@
                 <div class="spor-lft">
                   <span class='glyphicon glyphicon-check ' aria-hidden="true" ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}"></span>
                   <a href="" ui-sref="dashboard.{{getUrl(match.TypeID,'match.matchid','match.marketid',match.matchName,match.MstDate,match.SportId)}}">
-                    {{match.matchName}}&emsp;<<&emsp;{{match.HeadName}}<span>{{match.MstDate | date : 'EEEE HH:mm'}}</span>
+                    {{match.matchName}}&emsp;<<&emsp;{{match.HeadName}}<span>{{match.MstDate | date : 'dd/MM HH:mm'}}</span>
                     <!-- {{match}} -->
                     <!--{{(=="OPEN"?od.inplay?false:true:false)}}-->
                     <span  ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}">{{od.status=='OPEN'?od.inplay?"In-Play":"Going In-Play":od.status}}</span>
@@ -129,7 +129,7 @@
                 <div class="spor-lft">
                   <span class='glyphicon glyphicon-check ' aria-hidden="true" ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}"></span>
                   <a href="" ui-sref="dashboard.{{getUrl(match.TypeID,'match.matchid','match.marketid',match.matchName,match.MstDate,match.SportId)}}">
-                    {{match.matchName}}&emsp;<<&emsp;{{match.HeadName}}<span>{{match.MstDate | date : 'EEEE HH:mm'}}</span>
+                    {{match.matchName}}&emsp;<<&emsp;{{match.HeadName}}<span>{{match.MstDate | date : 'dd/MM HH:mm'}}</span>
                     <!-- {{match}} -->
                     <!--{{(=="OPEN"?od.inplay?false:true:false)}}-->
                     <span  ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}">{{od.status=='OPEN'?od.inplay?"In-Play":"Going In-Play":od.status}}</span>
@@ -178,7 +178,7 @@
                 <div class="spor-lft">
                   <span class='glyphicon glyphicon-check ' aria-hidden="true" ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}"></span>
                   <a href="" ui-sref="dashboard.{{getUrl(match.TypeID,'match.matchid','match.marketid',match.matchName,match.MstDate,match.SportId)}}">
-                    {{match.matchName}}&emsp;<<&emsp;{{match.HeadName}}<span>{{match.MstDate | date : 'EEEE HH:mm'}}</span>
+                    {{match.matchName}}&emsp;<<&emsp;{{match.HeadName}}<span>{{match.MstDate | date : 'dd/MM HH:mm'}}</span>
                     <!-- {{match}} -->
                     <!--{{(=="OPEN"?od.inplay?false:true:false)}}-->
                     <span  ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}">{{od.status=='OPEN'?od.inplay?"In-Play":"Going In-Play":od.status}}</span>
@@ -227,7 +227,7 @@
                 <div class="spor-lft">
                   <span class='glyphicon glyphicon-check ' aria-hidden="true" ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}"></span>
                   <a href="" ui-sref="dashboard.{{getUrl(match.TypeID,'match.matchid','match.marketid',match.matchName,match.MstDate,match.SportId)}}">
-                    {{match.matchName}}&emsp;<<&emsp;{{match.HeadName}}<span>{{match.MstDate | date : 'EEEE HH:mm'}}</span>
+                    {{match.matchName}}&emsp;<<&emsp;{{match.HeadName}}<span>{{match.MstDate | date : 'dd/MM HH:mm'}}</span>
                     <!-- {{match}} -->
                     <!--{{(=="OPEN"?od.inplay?false:true:false)}}-->
                     <span  ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}">{{od.status=='OPEN'?od.inplay?"In-Play":"Going In-Play":od.status}}</span>

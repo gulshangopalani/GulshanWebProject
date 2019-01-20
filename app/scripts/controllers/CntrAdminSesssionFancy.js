@@ -114,7 +114,7 @@ app.controller('CntrAdminSesssionFancy', function($scope,$http, $timeout,$stateP
 
     
       var d = new Date(); var hours=d.getHours();var Minutes=d.getMinutes(); var Seconds=d.getMinutes(); var Time=hours+":"+Minutes+":"+Seconds;
-      var date =d.getDate(); console.log(Time); $scope.mytime = d;$scope.dt=d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();$scope.NewCDate = new Date();
+      var date =d.getDate(); $scope.mytime = d;$scope.dt=d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();$scope.NewCDate = new Date();
         
      $scope.fancyHeaderName="Session Fancy";
      console.log(MatchId);

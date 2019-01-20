@@ -25,51 +25,51 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
     var matchStatus = "OPEN";
     $scope.checkBet={};
     $scope.countdown = function() {
-        
+
         //stopped = $timeout(function() {
-            $http.get("http://tacchysport.com/gulshan.php?sportid=" + $stateParams.sportId + "&eventid=" + $scope.MatchId).then(function successCallback(response){          
-                $scope.apiFancy = response.data;
-            }).then(function(apiFancy){
-                $scope.FancyArray = { "items": [] };                                
-                $http.get("Lstsavemstrcontroller/GetFancyOnHeader/"+$stateParams.MatchId).then(function successCallback(response){                           
-                    $scope.FancyFromDb = response.data.getFancy;               
-                    /*Filter The Fancy api to Db*/
-                    $scope.apiFancy.result.find(function(item,index){                    
-                        if($scope.FancyFromDb.length >0){
-                            var fileterVal = $filter('filter')($scope.FancyFromDb, { marketId: item.id })[0];
-                            if( fileterVal != angular.isUndefinedOrNull && item.btype =='LINE'){                                
-                               $scope.FancyArray.items.push({
-                                    id : fileterVal.ID,
-                                    marketId : item.id,
-                                    name : item.name,
-                                    backLine: item.runners[0].back[0].line,
-                                    backPrice: item.runners[0].back[0].price,
-                                    layLine: item.runners[0].lay[0].line,
-                                    layPrice: item.runners[0].lay[0].price,
-                                    status: item.status,
-                                    maxLiabilityPerBet: item.maxLiabilityPerBet,
-                                    maxLiabilityPerMarket: item.maxLiabilityPerMarket,
-                                    betDelay: item.betDelay,
-                                    isBettable: item.isBettable,
-                                    statusLabel:item.statusLabel                                
-                               });
-                            }
-                        }                     
-                    });
-                    /*Filter The Fancy api to Db*/
-                     updateFancy();     
-                });                                                    
+        $http.get("http://13.234.26.15:8080/fancy?sportid=" + $stateParams.sportId + "&eventid=" + $scope.MatchId).then(function successCallback(response){
+            $scope.apiFancy = response.data;
+        }).then(function(apiFancy){
+            $scope.FancyArray = { "items": [] };
+            $http.get("Lstsavemstrcontroller/GetFancyOnHeader/"+$stateParams.MatchId).then(function successCallback(response){
+                $scope.FancyFromDb = response.data.getFancy;
+                /*Filter The Fancy api to Db*/
+                $scope.apiFancy.result.find(function(item,index){
+                    if($scope.FancyFromDb.length >0){
+                        var fileterVal = $filter('filter')($scope.FancyFromDb, { marketId: item.id })[0];
+                        if( fileterVal != angular.isUndefinedOrNull && item.btype =='LINE'){
+                            $scope.FancyArray.items.push({
+                                id : fileterVal.ID,
+                                marketId : item.id,
+                                name : item.name,
+                                backLine: item.runners[0].back[0].line,
+                                backPrice: item.runners[0].back[0].price,
+                                layLine: item.runners[0].lay[0].line,
+                                layPrice: item.runners[0].lay[0].price,
+                                status: item.status,
+                                maxLiabilityPerBet: item.maxLiabilityPerBet,
+                                maxLiabilityPerMarket: item.maxLiabilityPerMarket,
+                                betDelay: item.betDelay,
+                                isBettable: item.isBettable,
+                                statusLabel:item.statusLabel
+                            });
+                        }
+                    }
+                });
+                /*Filter The Fancy api to Db*/
+                updateFancy();
             });
-            //$scope.countdown();
-       // }, 10000);
+        });
+        //$scope.countdown();
+        // }, 10000);
     };
     function updateFancy(){
-        fancyTimer = $timeout(function (){           
-            $http.get("http://tacchysport.com/gulshan.php?sportid=" + $stateParams.sportId + "&eventid=" + $scope.MatchId).then(function successCallback(response){
+        fancyTimer = $timeout(function (){
+            $http.get("http://13.234.26.15:8080/fancy?sportid=" + $stateParams.sportId + "&eventid=" + $scope.MatchId).then(function successCallback(response){
                 $scope.apiFancy = response.data;
-                if($scope.apiFancy.result.length >0){                                   
+                if($scope.apiFancy.result.length >0){
                     for (var i = 0; i < $scope.apiFancy.result.length; i++) {
-                       var fileterVal = $filter('filter')($scope.FancyArray.items, { marketId: $scope.apiFancy.result[i].id })[0];
+                        var fileterVal = $filter('filter')($scope.FancyArray.items, { marketId: $scope.apiFancy.result[i].id })[0];
                         if( fileterVal != angular.isUndefinedOrNull && $scope.apiFancy.result[i].btype =='LINE'){
                             $scope.FancyArray.items.filter(function(item){
                                 if(item.marketId == $scope.apiFancy.result[i].id){
@@ -78,47 +78,47 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                                     item.layLine= $scope.apiFancy.result[i].runners[0].lay[0].line;
                                     item.layPrice= $scope.apiFancy.result[i].runners[0].lay[0].price;
                                     item.status= $scope.apiFancy.result[i].status,
-                                    item.betDelay= $scope.apiFancy.result[i].betDelay;
+                                        item.betDelay= $scope.apiFancy.result[i].betDelay;
                                     item.isBettable= $scope.apiFancy.result[i].isBettable;
                                     item.statusLabel=$scope.apiFancy.result[i].statusLabel;
                                 }
                             });
                         }
                     }
-                }                
+                }
             });
             updateFancy();
         }, 1000);
     }
-    $scope.countdown();   
+    $scope.countdown();
     $scope.initiateBet=function(){
-    	$http.get('Betentrycntr/chkbets/').success(function(data, status, headers, config) {    		
-    			$scope.checkBet = data.jsonData;
+        $http.get('Betentrycntr/chkbets/').success(function(data, status, headers, config) {
+            $scope.checkBet = data.jsonData;
         });
     }
     $scope.GetUserData=function(){
         $http.get('Betentrycntr/GatBetData/' + $stateParams.MarketId + '/' + sessionService.get('type') + '/' + sessionService.get('user_id') + '/' + $stateParams.MatchId).success(function(data, status, headers, config) {
-            $scope.UserData = data.betUserData;           
+            $scope.UserData = data.betUserData;
 
         });
         $scope.initiateBet();
     }
     $scope.chkbets=function(){
-    	$http.get('Betentrycntr/chkbets/').success(function(data, status, headers, config) {
-    		
-    		if ($scope.checkBet == angular.isUndefinedOrNull) {
-    			$scope.chkbets();
-    		}else{
+        $http.get('Betentrycntr/chkbets/').success(function(data, status, headers, config) {
 
-    			var MaxFancyId = data.jsonData[0].FbetId;
-    			var oddsbetId = data.jsonData[0].oddsbetId;
-    			if(data.jsonData[0].FbetId >$scope.checkBet[0].FbetId || data.jsonData[0].oddsbetId >$scope.checkBet[0].oddsbetId ){
+            if ($scope.checkBet == angular.isUndefinedOrNull) {
+                $scope.chkbets();
+            }else{
+
+                var MaxFancyId = data.jsonData[0].FbetId;
+                var oddsbetId = data.jsonData[0].oddsbetId;
+                if(data.jsonData[0].FbetId >$scope.checkBet[0].FbetId || data.jsonData[0].oddsbetId >$scope.checkBet[0].oddsbetId ){
                     $rootScope.$broadcast('update_cntrusrpos', {});
                     $scope.getNameFunc();
-    				$scope.GetUserData();
-    			}
-    		}
-                
+                    $scope.GetUserData();
+                }
+            }
+
 
         });
     }
@@ -126,29 +126,29 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
     $scope.$on("$destroy", function(event) {
         $interval.cancel($scope.FancyBet);
         $scope.FancyBet = angular.isUndefinedOrNull;
-    });    
+    });
     $scope.styleColor=function(value){
         if(value < 0){ return "RED"; }else{ return "GREEN";  }
-    }   
-    if($scope.gtTypeId !=3){       
-        var scorePosition = $interval(function () {        
-        if($stateParams.MatchId == sessionService.get('MatchId') && $scope.gtTypeId !=3){
-            var $promise = $http.get(BASE_URL + 'Sessioncntr/FancyScorePosition/'  + sessionService.get('fancyId') + '/' + sessionService.get('slctUseID') + '/' + sessionService.get('FancyType'));
-            $promise.then(function (response) {               
-                $scope.scorePosition=response.data.scorePosition;
-            });
-        } 
+    }
+    if($scope.gtTypeId !=3){
+        var scorePosition = $interval(function () {
+            if($stateParams.MatchId == sessionService.get('MatchId') && $scope.gtTypeId !=3){
+                var $promise = $http.get(BASE_URL + 'Sessioncntr/FancyScorePosition/'  + sessionService.get('fancyId') + '/' + sessionService.get('slctUseID') + '/' + sessionService.get('FancyType'));
+                $promise.then(function (response) {
+                    $scope.scorePosition=response.data.scorePosition;
+                });
+            }
         }, 10000);
     }
     $scope.scorePosition=function(FancyId,FancyTypeId){
-       
-       
-            var $promise = $http.get(BASE_URL + 'Sessioncntr/FancyScorePosition/'  + FancyId + '/' + sessionService.get('slctUseID') + '/' + FancyTypeId);
-            $promise.then(function (response) {
-               
-                $scope.scorePosition1=response.data.scorePosition;
-            });
-       
+
+
+        var $promise = $http.get(BASE_URL + 'Sessioncntr/FancyScorePosition/'  + FancyId + '/' + sessionService.get('slctUseID') + '/' + FancyTypeId);
+        $promise.then(function (response) {
+
+            $scope.scorePosition1=response.data.scorePosition;
+        });
+
     }
     $scope.showSetPassword = function (mstcode,user_id,marketId) {
         $mdDialog.show({
@@ -160,23 +160,23 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         });
     };
     function SetPasswrdCntr(scope,$mdDialog,betId,userId,MarketId) {
-       
-        scope.checkPassword=function(password){           
-            var marketData = { Password: password };         
-            $http({ method: 'POST', url: 'Betentrycntr/CheckAdminPass/', data: marketData, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
-            .success(function(data) {               
-                if (data.error=='1') {
-                    scope.hide();
-                    $http.get('Betentrycntr/deleteGetbettingmat/' + betId + '/' + userId+'/'+MarketId).success(function (data, status, headers, config) {
-                        alert("Record Deleted Successfully...");
-                    });
 
-                }else{
-                    scope.hide();
-                    alert(data.message);
-                }
-                
-            });
+        scope.checkPassword=function(password){
+            var marketData = { Password: password };
+            $http({ method: 'POST', url: 'Betentrycntr/CheckAdminPass/', data: marketData, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+                .success(function(data) {
+                    if (data.error=='1') {
+                        scope.hide();
+                        $http.get('Betentrycntr/deleteGetbettingmat/' + betId + '/' + userId+'/'+MarketId).success(function (data, status, headers, config) {
+                            alert("Record Deleted Successfully...");
+                        });
+
+                    }else{
+                        scope.hide();
+                        alert(data.message);
+                    }
+
+                });
         }
         scope.hide = function () { $mdDialog.hide(); };
     }
@@ -184,7 +184,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         var result = confirm("Are you sure want to delete Records Unmatched");
         if (result) {
             $http.get('Betentrycntr/deleteGetbetting/' + betId + '/' + userId).success(function (data, status, headers, config) {
-                
+
                 Dialog.autohide("Record Deleted Successfully...");
             });
 
@@ -195,21 +195,21 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         var result = confirm("Are you sure want to delete Records Matched"+MarketId);
         if (result) {
             $http.get('Betentrycntr/deleteGetbettingmat/' + betId + '/' + userId+'/'+MarketId).success(function (data, status, headers, config) {
-                
-                 Dialog.autohide("Record Deleted Successfully...");
-               
+
+                Dialog.autohide("Record Deleted Successfully...");
+
             });
 
         }
 
     }
     $scope.sum = function (items, prop) {
-            return items.reduce(function (a, b) {
-                var t = parseFloat(a) + parseFloat(b[prop]);
-                return parseFloat(a) + parseFloat(b[prop]);
-            }, 0);
+        return items.reduce(function (a, b) {
+            var t = parseFloat(a) + parseFloat(b[prop]);
+            return parseFloat(a) + parseFloat(b[prop]);
+        }, 0);
     };
-    
+
     $scope.GetUserData();
     /*end of new function*/
     $scope.saveMatchoddsResult = function(Match_id, Sport_id, market_id, selectionId, model_result, spartName, matchName, MarketName, selectionName) {
@@ -245,20 +245,20 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
     $scope.getNameFunc = function() {
         var user_id = sessionService.get('slctUseID');
         var user_type = sessionService.get('slctUseTypeID');
-        
-        $http.get('Geteventcntr/getBackLaysOfMarketSelectionName/' + $scope.MarketId + '/' + user_id + '/' + user_type + '/' + $scope.MatchId).success(function(data, status, headers, config)
-            {
-                
-                if (data.runnerSlName != angular.isUndefinedOrNull && data.runnerSlName.length > 0)
-                    $scope.GetMarketBackLayDataSelectionName = data.runnerSlName[0].runners;
-                if (data.RunnerValue != angular.isUndefinedOrNull && data.RunnerValue.length != 0)
-                    $scope.RunnerValue = data.RunnerValue;
-                else
-                    $scope.RunnerValue = [{}];
 
-                if (data.MarketData != angular.isUndefinedOrNull && data.MarketData.length != 0)
-                    $scope.GetMarketInfo = data.MarketData[0];
-            });
+        $http.get('Geteventcntr/getBackLaysOfMarketSelectionName/' + $scope.MarketId + '/' + user_id + '/' + user_type + '/' + $scope.MatchId).success(function(data, status, headers, config)
+        {
+
+            if (data.runnerSlName != angular.isUndefinedOrNull && data.runnerSlName.length > 0)
+                $scope.GetMarketBackLayDataSelectionName = data.runnerSlName[0].runners;
+            if (data.RunnerValue != angular.isUndefinedOrNull && data.RunnerValue.length != 0)
+                $scope.RunnerValue = data.RunnerValue;
+            else
+                $scope.RunnerValue = [{}];
+
+            if (data.MarketData != angular.isUndefinedOrNull && data.MarketData.length != 0)
+                $scope.GetMarketInfo = data.MarketData[0];
+        });
     }
     $scope.getSumValPnL = function(a, b) {
         if(a==angular.isUndefinedOrNull && b==angular.isUndefinedOrNull){ a=0;b=0; }
@@ -268,24 +268,24 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
     var totalMatch = 0;
     var selectedRunner = null;
     $scope.$on("$destroy", function(event) {
-    $interval.cancel($scope.stopScore);
+        $interval.cancel($scope.stopScore);
         $timeout.cancel($scope.callOddsFunc);
         $timeout.cancel(fancyTimer);
         $scope.callOddsFunc = angular.isUndefinedOrNull;
     });
     $scope.callOddsFunc = function() {
-        var maxloop = 0;       
+        var maxloop = 0;
         var $promise = $http.get('UsereventCntr/getBackLaysOfMarket/' + MarketId + '/' + $stateParams.MatchId);
         $promise.then(function(response) {
-           $scope.MarketDelay=response.data.MarketRunner.isMarketDataDelayed;
-             /*start code for Match Unmatch*/
+            $scope.MarketDelay=response.data.MarketRunner.isMarketDataDelayed;
+            /*start code for Match Unmatch*/
             if($scope.UserData != angular.isUndefinedOrNull){
                 if($filter('filter')($scope.UserData, { IsMatched: '0' }).length >0){
                     $scope.unMatchBets = $filter('filter')($scope.UserData, { IsMatched: '0' });
                     try {
-                        for (var i = 0; i < $scope.unMatchBets.length; i++) {                            
+                        for (var i = 0; i < $scope.unMatchBets.length; i++) {
                             if ($scope.GetMarketBackLayData != angular.isUndefinedOrNull) {
-                                $scope.GetMarketBackLayData.runners.find(function(item, j) {                                    
+                                $scope.GetMarketBackLayData.runners.find(function(item, j) {
                                     if (item.selectionId == $scope.unMatchBets[i].SelectionId && ($scope.GetMarketBackLayData.marketId == $scope.unMatchBets[i].MarketId) && ($scope.unMatchBets[i].MatchId == $stateParams.MatchId) && ($scope.unMatchBets[i].IsMatched == 0)) {
                                         if ($scope.unMatchBets[i].isBack == 0) {
                                             if (item.ex.availableToBack.length != 0 && $scope.unMatchBets[i].Odds <= (item.ex.availableToBack[0].price)) {
@@ -306,9 +306,9 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                                 });
                             }
                         }
-                    } catch (e) {} 
+                    } catch (e) {}
                 }
-            }                                       
+            }
             /*End of the code of Match and unmatch*/
             if ($scope.GetMarketBackLayData == angular.isUndefinedOrNull) {
                 $scope.GetMarketBackLayData = response.data.MarketRunner;
@@ -332,7 +332,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                         try { $scope.GetMarketBackLayData.inplay = response.data.MarketRunner.inplay; } catch (e) { console.log('inplay--');
                             console.log(response.data.MarketRunner); }
                         $scope.GetMarketBackLayData.status = response.data.MarketRunner.status;
-                        matchStatus = response.data.MarketRunner.status;                        
+                        matchStatus = response.data.MarketRunner.status;
                         totalMatch = response.data.MarketRunner.totalMatched;
                         $scope.GetMarketBackLayData.totalMatched = response.data.MarketRunner.totalMatched;
                         if ($scope.GetMarketBackLayData.status == "OPEN" && $scope.GetMarketBackLayData.runners != angular.isUndefinedOrNull && $scope.GetMarketBackLayData.runners.length > 0) { //&& selectedRunner != angular.isUndefinedOrNull
@@ -441,9 +441,9 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                 }else{
                     $http({
                         method: "GET",
-                        url: "http://tacchysport.com/gulshan.php?sportid=" + $stateParams.sportId + "&eventid=" + $scope.MatchId
+                        url: "http://13.234.26.15:8080/fancy?sportid=" + $stateParams.sportId + "&eventid=" + $scope.MatchId
                     }).success(function (data) {
-                    //debugger;                       
+                        //debugger;
                         selectedRunner = null;
                         var MarketRunner = $filter('filter')(data.result, { id: $stateParams.MarketId })[0];
                         if (MarketRunner != angular.isUndefinedOrNull ) {
@@ -452,7 +452,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                                 console.log(MarketRunner); }
                             $scope.GetMarketBackLayData.status = MarketRunner.status;
                             matchStatus = MarketRunner.status;
-                            
+
                             totalMatch = MarketRunner.matched;
                             $scope.GetMarketBackLayData.totalMatched = MarketRunner.matched;
                             if ($scope.GetMarketBackLayData.status == "OPEN" && $scope.GetMarketBackLayData.runners != angular.isUndefinedOrNull && $scope.GetMarketBackLayData.runners.length > 0) { //&& selectedRunner != angular.isUndefinedOrNull
@@ -562,7 +562,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                     }).error(function (err) {
                         console.log("err", err)
                     });
-                }                
+                }
                 /*End the code of other api*/
             } else {
                 $scope.GetMarketBackLayData = response.data.MarketRunner;
@@ -572,28 +572,28 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                 matchStatus = response.data.MarketRunner.status;
                 $scope.GetMarketBackLayData.totalMatched = response.data.MarketRunner.totalMatched;
             }
-            marketTimer = $timeout(function() {                
-                if ($scope.GetMarketBackLayData != angular.isUndefinedOrNull) {                    
-                    for (var j = 0; j < maxloop; j++) {                        
+            marketTimer = $timeout(function() {
+                if ($scope.GetMarketBackLayData != angular.isUndefinedOrNull) {
+                    for (var j = 0; j < maxloop; j++) {
                         try { $scope.GetMarketBackLayData.runners[j].ex.availableToBack[0].SELECTED = false; } catch (e) {}
                         try { $scope.GetMarketBackLayData.runners[j].ex.availableToBack[1].SELECTED = false; } catch (e) {}
                         try { $scope.GetMarketBackLayData.runners[j].ex.availableToBack[2].SELECTED = false; } catch (e) {}
                         try { $scope.GetMarketBackLayData.runners[j].ex.availableToLay[0].SELECTED = false; } catch (e) {}
                         try { $scope.GetMarketBackLayData.runners[j].ex.availableToLay[1].SELECTED = false; } catch (e) {}
-                        try { $scope.GetMarketBackLayData.runners[j].ex.availableToLay[2].SELECTED = false; } catch (e) {}                    
+                        try { $scope.GetMarketBackLayData.runners[j].ex.availableToLay[2].SELECTED = false; } catch (e) {}
                     }
                     if ($scope.GetMarketBackLayData.Status != 3) {
                         if ($scope.GetMarketBackLayData.marketId != null) {
-                            $scope.callOddsFunc();                           
+                            $scope.callOddsFunc();
                         }
                     }
                 } else {
-                    $scope.callOddsFunc();                   
+                    $scope.callOddsFunc();
                 }
-            }, 1000);            
+            }, 1000);
             var OnlineStatus = $interval(OnlineStatusChanged, 10000)
-            var updatedOnline = function() {                
-                if (navigator.onLine) {                    
+            var updatedOnline = function() {
+                if (navigator.onLine) {
                     $interval.cancel(Changed);
                     Changed = angular.isUndefinedOrNull;
                     location.reload();
@@ -605,7 +605,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                     if (!$scope.netConn) {
                         $mdDialog.hide();
                         $scope.netConn = true;
-                        $scope.callOddsFunc();                        
+                        $scope.callOddsFunc();
                     }
                 } else {
                     Changed = $interval(updatedOnline, 100)
@@ -625,8 +625,8 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
             }
         });
     }
-    $scope.callOddsCloseMatch = function() { 
-       // 
+    $scope.callOddsCloseMatch = function() {
+        //
         if ($scope.GetMarketBackLayData.status == "CLOSED") {
             var vSelectionID = $filter('filter')($scope.GetMarketBackLayData.runners, { status: "WINNER" })[0].selectionId;
             var selectionName1 = "";
@@ -649,7 +649,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
                     //$scope.RunnerValue = data.RunnerValue;
                     selectionName1 = $filter('filter')(data.RunnerValue, { selectionId: vSelectionID })[0].selectionName;
                     if (selectionName1 != "")
-                        //
+                    //
                         $scope.saveMatchoddsResult($scope.MatchId, $scope.GetMarketInfo.SportID, $scope.MarketId, vSelectionID, 1, $scope.GetMarketInfo.SportName, $stateParams.matchName, $scope.GetMarketInfo.MarketName, selectionName1);
                 });
             }
@@ -670,7 +670,7 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         }
     };
     $scope.UnMatchToMatchedData=function(Parametr){
-       
+
         $http.get('Betentrycntr/updateUnMatchedData/' + Parametr.MstCode + '/' + Parametr.isBack + '/' + Parametr.MarketId + '/' + sessionService.get('type') + '/' + sessionService.get('user_id') + '/' + Parametr.MatchId).success(function(data, status, headers, config) {
             $scope.UserData = data.betUserData;
             $scope.getBetsData();
@@ -714,25 +714,25 @@ app.controller('Matchoddscntr', ['$scope', '$http', '$stateParams', 'sessionServ
         marketTimer = angular.isUndefinedOrNull;
     });
 }]);
-app.directive('crntusrpsn', function() { 
+app.directive('crntusrpsn', function() {
     return {
         templateUrl: 'app/scripts/directives/timeline/Matchodds_crntusr_psn.html',
         restrict: 'E',
         replace: true,
         scope: {},
-        link: function (scope, element, attrs) {            
-          
-            scope.$on('update_cntrusrpos', function (event, data) { scope.getUserPosition(1, 0); });           
+        link: function (scope, element, attrs) {
+
+            scope.$on('update_cntrusrpos', function (event, data) { scope.getUserPosition(1, 0); });
 
         },
         controller: ['$scope', '$http', '$stateParams', 'sessionService', '$interval','$timeout', function($scope, $http, $stateParams, sessionService, $interval,$timeout) {
             $scope.getUserPosition = function(userId, userType) {
-               
+
                 $scope.crntusep_userId = userId;
                 $scope.crntusep_userType = userType;
                 if (userType != "3") {
                     $http.get(BASE_URL + 'Usercurrntposicntr/getUserPosition/' + userId + '/' + userType + '/' + $stateParams.MatchId + '/' + $stateParams.MarketId).success(function(data, status, headers, config) {
-                        
+
                         $scope.totalTeamA = 0;
                         $scope.totalTeamB = 0;
                         $scope.totaltheDraw = 0;
@@ -761,7 +761,7 @@ app.directive('crntusrpsn', function() {
             }
             $scope.$on("$destroy", function(event) {
                 $timeout.cancel($scope.si_getCrntUserPosition);
-                
+
             });
         }]
     }

@@ -1,12 +1,11 @@
-   <div>
+   <div ng-init='load()'>
    <div class="example3">
       <nav class="navbar navbar-inverse navbar-static-top">
         <div class="container-fluid">
            <div class="row padding">
             <div class="col-sm-3 col-xs-6">
               <div class="navbar-header ">
-                 <a class="navbar-brand visible-xs" ui-sref="dealerDashboard.Home"><img src="app/images/Home_logo.png" alt="logo"></a>
-                  <a class="navbar-brand hidden-xs" ui-sref="dealerDashboard.Home"><img src="app/images/Home_logo.png" alt="logo"></a>
+                  <a class="home-logo-pa" ui-sref="dealerDashboard.Home"><img src="app/images/Home_logo.png" alt="logo"></a>
               </div>
             </div>
           <div class="col-sm-9">
@@ -21,7 +20,7 @@
       </nav>
     </div>
 
-     <nav class="navbar navbar-default second-navbar">
+     <nav class="navbar navbar-default second-navbar" role="navigation">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">

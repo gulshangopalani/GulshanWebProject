@@ -61,6 +61,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		}
 
+        function deleteMatchOdds($matchId) {
+            $condition=$this->Betentrymodel->deleteMatchOdds($matchId);
+            if ($condition) {
+                $data['error'] = 0;
+                $data['message'] = 'Record deleted Successfully...';
+                echo json_encode($data);
+            }else{
+                $data['error'] = 1;
+                $data['message'] = 'Record deleted Successfully...';
+                echo json_encode($data);
+            }
+
+        }
+
 		function deleteGetbettingmat($betId,$userId,$marketId){
 			if($this->session->userdata('user_id')==1 && $this->session->userdata('type')==0){
 				$condition=$this->Betentrymodel->deleteGetbettingmat($betId,$userId,$marketId);

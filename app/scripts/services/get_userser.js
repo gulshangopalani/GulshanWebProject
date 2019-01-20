@@ -124,25 +124,25 @@ app.factory('get_userser', function ($http, $location, sessionService, $rootScop
                 });
 
             }else{
-                var $promise = $http.get("http://13.233.205.216/gulshan.php?sportid=" +sportId+ "&eventid=" + matchId);
+                var $promise = $http.get("http://13.234.26.15:8080/fancy?sportid=" +sportId+ "&eventid=" + matchId);
                 $promise.then(function (response) {
-                    ;
+                    // debugger;
                     var MarketRunner = $filter('filter')(response.data.result, { id: MarketId })[0];
                     if (isback == "0")
                         var oddsValue = ($filter('filter')(MarketRunner.runners, { id: selectionId1 })[0].back[0].price);
-                    else 
+                    else
                         var oddsValue = ($filter('filter')(MarketRunner.runners, { id: selectionId1 })[0].lay[0].price);
-              
+
 
                     var inplay = MarketRunner.inPlay;
                     var ApiData={ oddsValue: oddsValue,inplay: inplay};
                     $callback(ApiData);
-                    
+
 
                 });
 
             }
-            
+
         },
         getSessionFancy: function (matchId, sportId, $callback) {
             var marketData = { matchId: matchId, sportsId: sportId }
@@ -158,9 +158,9 @@ app.factory('get_userser', function ($http, $location, sessionService, $rootScop
             });
         },
         changePassword: function(oldPassword,newPassword,userId, $callback){
-             var Data = { oldPassword: oldPassword, newPassword: newPassword , userId: userId};
-             
-             var $promise = $http.post(BASE_URL + 'Lstsavemstrcontroller/changeLgnPassword/', Data);
+            var Data = { oldPassword: oldPassword, newPassword: newPassword , userId: userId};
+
+            var $promise = $http.post(BASE_URL + 'Lstsavemstrcontroller/changeLgnPassword/', Data);
             //var $promise = $http({ method: 'POST', url: 'Lstsavemstrcontroller/changeLgnPassword/', Data: Data });
             $promise.then(function (response) {
                 $callback(response.data);
@@ -169,14 +169,14 @@ app.factory('get_userser', function ($http, $location, sessionService, $rootScop
         getBetDelay:function(userId, $callback){
             var $promise = $http.post(BASE_URL + 'Createdealercontroller/getBetDelay/' + userId);
             $promise.then(function (response) {
-                //;
+                //debugger;
                 $callback(response.data.BetDelay[0].set_timeout);
             });
         },
         GetFancyLength:function($callback){
             var $promise = $http.post(BASE_URL + 'Createdealercontroller/getFancyLength/');
             $promise.then(function (response) {
-                //;
+                //debugger;
                 $callback(response.data.FancyNum[0].ID);
             });
         }

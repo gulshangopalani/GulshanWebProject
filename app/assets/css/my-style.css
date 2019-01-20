@@ -258,10 +258,13 @@ md-dialog._md.md-transition-in {
 @media only screen and (max-width: 1156px) {
  .tab_container label .fa {
     font-size: 16px;
+
   }
 
   .tab_container {
-    width: 98%;
+    width: 104%;
+
+  }
   }
   .mob-view{
   display:none;
@@ -1026,7 +1029,10 @@ margin-top: 10px !important;}
 @media (max-width:540px){
 .pwd-inp {
     width:59% !important;
-}
+    }
+    .team-lft-txt {
+        display: none;
+    }
 /*.sel-user-det {display:none;}*/
 .status-icon ul li{ width:225px !important;}
 .head-lft-top{ display:none;}
@@ -3831,7 +3837,9 @@ a.home-logo-pa
 }
 a.home-logo-pa img
 {
-    height: 69px;
+    margin-bottom: -24px;
+    height: 70px;
+    margin-top: -13px;
 }
 .team-home span
 {

@@ -1,4 +1,4 @@
-﻿'use strict';//sourabh 13-dec-2016
+﻿﻿'use strict';//sourabh 13-dec-2016
 angular.module('ApsilonApp').controller('userdashboard',['$scope', '$http', 'sessionService', '$timeout', 'deviceDetector','$filter', function ($scope, $http, sessionService, $timeout, deviceDetector,$filter) {
     /*start slider In Master dashboard */
    
@@ -50,7 +50,7 @@ angular.module('ApsilonApp').controller('userdashboard',['$scope', '$http', 'ses
                                                var sportId=$filter('filter')(data.RunnerValue,{selectionId : vSelectionID})[0].sportId;
                                                selectionName1=$filter('filter')(data.RunnerValue,{selectionId : vSelectionID})[0].selectionName;
                                                 if(selectionName1!=""){
-                                                   debugger;    
+
                                                 // MatchId; sportId; selectedRunner[0].marketId; vSelectionID;sportName; MatchName;selectionName1;
                                                     $scope.saveMatchoddsResult(MatchId, sportId,selectedRunner[0].marketId, vSelectionID, 1, sportName, MatchName, 'match Odds', selectionName1);  
                                                                                               
@@ -130,6 +130,32 @@ angular.module('ApsilonApp').controller('userdashboard',['$scope', '$http', 'ses
         });
     }
     $scope.getMatchResult();
+
+    $(document).ready(function() {
+        $(".toggle-accordion").on("click", function() {
+            var accordionId = $(this).attr("accordion-id"),
+                numPanelOpen = $(accordionId + ' .collapse.in').length;
+
+            $(this).toggleClass("active");
+
+            if (numPanelOpen == 0) {
+                openAllPanels(accordionId);
+            } else {
+                closeAllPanels(accordionId);
+            }
+        })
+
+        openAllPanels = function(aId) {
+            console.log("setAllPanelOpen");
+            $(aId + ' .panel-collapse:not(".in")').collapse('show');
+        }
+        closeAllPanels = function(aId) {
+            console.log("setAllPanelclose");
+            $(aId + ' .panel-collapse.in').collapse('hide');
+        }
+
+    });
+
     $scope.getOddCalcVal = function (a, b)//sourabh 161231
     {
         var x = 0, y = 0, z = 0;
@@ -141,4 +167,6 @@ angular.module('ApsilonApp').controller('userdashboard',['$scope', '$http', 'ses
         if (z > 0) return z; else return "-";
     }
     $scope.$on("$destroy", function (event) { $timeout.cancel(marketTimer); marketTimer = angular.isUndefinedOrNull; });//sourabh 161229
+
+
 }]);

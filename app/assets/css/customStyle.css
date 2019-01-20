@@ -6,6 +6,9 @@ html,
 body
 {
 
+    background-image: url('../../images/Background.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 h1 { font-family: Ubuntu; font-size: 23px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 23px; } h3 { font-family: Ubuntu; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 23px; } p { font-family: Ubuntu; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; } blockquote { font-family: Ubuntu; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; } pre { font-family: Ubuntu; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; }
@@ -63,6 +66,24 @@ h1 { font-family: Ubuntu; font-size: 23px; font-style: normal; font-variant: nor
     margin-top: 0;
     margin-bottom: 0px;
 }
+
+.upcomingmatches {
+    font-size: 15px;
+    font-weight: bold;
+    color: #444;
+    padding: 25px 15px;
+    border-bottom: solid 1px #ccc;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+.panel-default>.panel-heading {
+    background-color: #38396C!important;
+    border-color: #38396C!important;
+    color: white;
+}
+
 .market-listing-table td.running-cell:nth-child(1) {
     width: 50%;
     min-width: 50%;
@@ -211,7 +232,7 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
   padding: 0px;
 }
 .example3 .navbar {
-    background-color: #e4e2e2;
+    background-color: #eff0f1;
     position: relative;
     min-height: 50px;
     margin-bottom: 0px!important;
@@ -245,15 +266,16 @@ a.logout {
   padding-left: 10px;
 }
 #nav-1 #main-nav {
-    position:absolute;
-    top:0px;left:0px;
-    width: 160px;
+    position: absolute;
+    top: 30px;
+    left: 0px;
+    width: 166px;
     height: 100%;overflow: hidden;
     min-height: 450px; 
     background: #fff;
     border: 1px solid #ddd;
     text-decoration: none;
-    background-color: #e4e2e2;
+    background-color: #eff0f1
 }
 .title {
     font-size: 18px;
@@ -277,6 +299,10 @@ a.logout {
     display: block;
         font-weight: 600;
   }
+.ul li a:hover{
+    background-color: #38396C !important;
+    color: #fff;
+}
   .ul-sub {margin:0px;padding:0px;}
   .ul-sub li{list-style-type:none;width:100%;border-bottom: solid 1px #ccc;}
   .ul-sub li a{   
@@ -332,15 +358,15 @@ a.logout {
 /*NAV BAR-2**************************/
 #nav-2 .main-nav {
     position:absolute;
-    top:0px;left:0px;
-    width: 160px;
+    top:30px;left:0px;
+    width: 166px;
     height: 100%;overflow: hidden;
     min-height: 450px;   
     z-index: 2;display: none;
     background: #fff;
     border: 1px solid #ddd;
     text-decoration: none;
-    background-color: #e4e2e2;
+    background-color: #eff0f1;
 }
 .nav-2 .ul li a{   
     text-align: left;
@@ -348,14 +374,14 @@ a.logout {
     font-size: 12px;
     text-transform: capitalize;
     color: #333;
-    padding: 8px 15px;
+    padding: 8px 2px;
     display: block;
   }
 
 /*NAV BAR-4**************************/
 #nav-4 .main-nav {
     position:absolute;
-    top:0px;left:0px;
+    top:30px;left:0px;
     width: 160px;
     height: 100%;overflow: hidden;
     min-height: 450px;   
@@ -368,8 +394,8 @@ a.logout {
     border: 1px solid #ccc;
     position:absolute;
     height: 100%;
-    width: 100%!important;
-    background-color: #e4e2e2;
+    width: 166px;
+    background-color: #eff0f1;
 }
 /*footer css*/
 .footer
@@ -874,7 +900,7 @@ padding:0!important;
   color: #ccc;
 }
 .client-form {
-padding:10px;
+    padding:10px;
 }
 .dealerdashboard {
     padding: 0px 10px;
@@ -952,7 +978,36 @@ text-align: left!important;
 .badge {
     border-radius: 3px!important;
 }
+
+.alert-message {
+    display: none;
+}
+
+.displayErrorMsg{
+    word-spacing: -10px;
+    color: #f6130b;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
 @media only screen and (max-width: 768px) {
+    #nav-1 #main-nav {
+        position: absolute;
+        top: 3px;
+        left: 0px;
+        width: 166px;
+        height: -webkit-fill-available;
+
+    }
+    #nav-2 .main-nav {
+        position: absolute;
+        top: 3px;
+        left: 0px;
+        width: 166px;
+        height: -webkit-fill-available;
+
+    }
+
   .market-listing-table td.running-cell:nth-child(1) {
     width: 65%;
     min-width: 65%;
@@ -1175,7 +1230,7 @@ ul.sport-high.fancyListDiv li:nth-child(2){
     width: 50%;
 }
 .navbar.second-navbar {
-    position: relative;
+    /*position: relative;*/
     min-height: 40px;
     margin-bottom: 5px;
     border: 1px solid transparent;
@@ -1369,12 +1424,16 @@ md-backdrop.md-dialog-backdrop {
 }
 .heading h1
 {
-  margin:0px;
-  font-size: 30px;
+    margin: 0px;
+    font-size: 28px;
+    padding: 6px;
+    color: #38396c;
+
 }
 md-pagination-wrapper {
     width: 100%!important;
     height: 38px!important;
+    background-color: #38396c;;
 }
 md-tabs-canvas {
     position: relative;
@@ -1960,6 +2019,19 @@ input[type="number"].ng-invalid, input[type="text"].ng-invalid {
     #bottomNav .bottom-links {
         font-size: 16px;
     }
+
+
+    #bottomNavMaster a {
+        font-size:16pt;
+        color:#ddd;
+        text-decoration:none;
+    }
+    #bottomNavMaster a:hover {
+        color:white;
+    }
+    #bottomNavMaster .bottom-links {
+        font-size: 16px;
+    }
     .padding {
         padding: -1px 12px!important;
     }
@@ -1971,6 +2043,9 @@ input[type="number"].ng-invalid, input[type="text"].ng-invalid {
     }
     .right-play span {
         font-size: 11px;
+    }
+    .client-form {
+        padding-bottom: 50px;
     }
 }
 
@@ -1997,34 +2072,263 @@ input[type="number"].ng-invalid, input[type="text"].ng-invalid {
     display: none;
     z-index: 20;
 }
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
-/*#wrap > .container {
-    padding: 10px 15px 0;
+
+/*
+ScoreBoard CSS
+*/
+
+
+.inplayMatchDetail {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
 }
-#footer > .container {
-    padding-left: 15px;
-    padding-right: 15px;
+.inplayMatchDetail > .match-detail-title, .header-title{
+    position: relative;
+    border-bottom: none;
 }
-.navbar-header {
-    float:none;
-    width:100%;
-    padding:10px;
+.inplayMatchDetail > .match-detail-title{
+    background-color: #860a21;
+    margin-top: 0;
+    padding: 0 10px;
+    color: #fff;
+    cursor: pointer;
 }
-.navbar-brand {
-    font-size:20pt;
-    float:none;
+.inplayMatchDetail > .match-detail-title h2, .inplayMatchDetail > .match-detail-title span{
+    color: #ffffff !important;
 }
-#bottomNav {
-    padding:10px;
+.inplayMatchDetail > .match-detail-title h2, .header-title h2{
+    font-size: 24px;
+    font-weight: normal;
+    display: inline-block;
+    color: #333333;
+    line-height: 51px;
+    margin: 0;
 }
-#bottomNav a {
-    font-size:24pt;
-    color:#ddd;
-    text-decoration:none;
+.inplayMatchDetail > .match-detail-title h2 i{
+    color: #333333;
+    font-size: 14px;
+    float: left;
+    margin-top: 20px;
+    margin-right: 8px;
 }
-#bottomNav a:hover {
-    color:#fff;
-}*/
-/*bet slip css end*/
+.header-title {
+    border-bottom: 1px solid #ccc;
+    height: 50px;
+    margin-bottom: 10px;
+}
+.header-title h2{
+    line-height: 50px;
+    margin: 0;
+}
+.header-title span {
+    float: right;
+    line-height: 50px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.inplayMatchDetail > .match-detail-title span i {
+    position: absolute;
+    right: 10px;
+    top: 19px;
+    color: #ffffff;
+    font-size: 16px;
+    left: auto;
+}
+.panel-title.collapsed span > i {
+    transform: rotate(180deg);
+}
+.match-detail-title.changeToggleArrow span i{
+    transform: rotate(180deg);
+}
+.inplayMatchDetail > .match-detail-header {
+    border: 1px solid #ddd;
+    display: flex;
+    padding: 0 10px;
+    padding-top: 10px;
+    border-width: 1px 1px 0 1px;
+}
+.inplayMatchDetail > .match-detail-content{
+    border: 1px solid #ddd;
+    display: flex;
+    padding: 0 10px;
+    border-width: 0 1px 0;
+    padding-bottom: 10px;
+    min-height: 165px;
+}
+.inplayMatchDetail > .match-detail-header > div, .inplayMatchDetail > .match-detail-content > div {
+    flex: 1;
+    width: 50%;
+}
+.inplayMatchDetail > .match-detail-header .toss h2 {
+    color: #333;
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: normal;
+    margin:0 0 10px;
+}
+.inplayMatchDetail > .match-detail-header .toss p {
+    margin: -6px 0 6px !important;
+    font-weight: bold;
+}
+.inplayMatchDetail > .match-detail-header table {
+    margin-bottom: 6px;
+    width: 100%;
+    text-align: center;
+}
+.inplayMatchDetail > .match-detail-header table th:not(:last-child),  .inplayMatchDetail > .match-detail-header table td:not(:last-child) {
+    border-right: 1px solid #ddd;
+    padding: 6px;
+    font-size: 12px;
+    line-height: 17px;
+}
+.inplayMatchDetail > .match-detail-content .over p {
+    cursor: default;
+    width: 99.9%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.inplayMatchDetail > .match-detail-content .over p,  .inplayMatchDetail > .match-detail-content .over .over-detail {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    margin-bottom: 6px;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail > div {
+    line-height: 20px;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .balls {
+    flex-grow: 1;
+    margin: 0 0 6px 5px;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .balls li {
+    display: inline-block;
+    font-weight: bold;
+    border-radius: 50%;
+    min-width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 10px;
+    margin-left: 3px;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .INFIELDBOUNDARY_4 {
+    background-color: #2d90d5;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .INFIELDBOUNDARY_6 {
+    background-color: #601c78;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .INFIELDBOUNDARY_0{
+    background-color: #999999;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .balls .WIDE,
+.inplayMatchDetail > .match-detail-content .over .over-detail .balls .WIDE_Wd{
+    background-color: #c2ad7b;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .balls .LEGBYE,
+.LEGBYE_1L{
+    background-color: #c2ad7b;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .INFIELDBOUNDARY_1, .inplayMatchDetail > .match-detail-content .over .over-detail .INFIELDBOUNDARY_2 ,
+.inplayMatchDetail > .match-detail-content .over .over-detail .INFIELDBOUNDARY_3 , .inplayMatchDetail > .match-detail-content .over .over-detail .INFIELDBOUNDARY_5{
+    background-color: #47a23c;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .INFIELDBOUNDARY  {
+    background-color: #47a23c;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .balls .WICKET,
+.inplayMatchDetail > .match-detail-content .over .over-detail .balls .WICKET_W{
+    background-color: #c9362b;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .runs-score {
+    display: flex;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .runs-score div {
+    padding: 0 5px 0 0;
+    line-height: 20px;
+}
+.inplayMatchDetail > .match-detail-content .over .over-detail .runs-score div::before {
+    content: '|';
+    color: #ddd;
+    padding: 0 5px 0 0;
+}
+.match-detail-content > div:last-child {
+    margin-left: 10px;
+}
+.inplayMatchDetail > .match-detail-content .row-highlight td:first-child {
+    text-transform: uppercase;
+}
+.inplayMatchDetail > .match-detail-content table td:first-child {
+    width: 40%;
+}
+table th, table td {
+    padding: 6px;
+}
+table{
+    width: 100%;
+}
+.inplayMatchDetail > .match-detail-content table td{
+    font-size: 12px;
+    line-height: 17px;
+}
+.inplayMatchDetail > .match-detail-content .row-highlight td {
+    background-color: #fde8ec;
+}
+.matchDetail .market-row table td{
+    height: 43px;
+}
+.market-row table td.back.unhighlighted{
+    background-color: #e3f3fe;
+}
+.market-row table td.lay.unhighlighted{
+    background-color: #fdeef2;
+}
+
+
+
+
+
+
+/* for dealer */
+@media screen and (max-width: 760px) {
+    .second-navbar {
+        background: #38396C;
+    }
+
+    .second-navbar .navbar-brand {
+        color: #fff;
+    }
+
+    .sidebar {
+        padding-top: 3px !important;
+    }
+    a.home-logo-pa img
+    {
+        margin-bottom: -24px;
+        height: 70px;
+        margin-top: -24px;
+    }
+    .text-left {
+        text-align: left !important;
+    }
+
+    .alert-message {
+        display: none;
+    }
+    .navbar-header {
+        height: 60px;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .fancy-table table > tbody > tr > td.lay {
+        padding: 10px;
+    }
+}

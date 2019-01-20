@@ -1468,7 +1468,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    Timer.prototype.print = function (msg) {
 	        var duration = (new Date().getTime()) - this.timestamp;
-	        console.log(msg + " = " + duration);
 	        this.timestamp = new Date().getTime();
 	    };
 	    return Timer;
@@ -2879,7 +2878,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.rowRenderer.refreshCells(rowNodes, colIds, animate);
 	    };
 	    GridApi.prototype.rowDataChanged = function (rows) {
-	        console.log('ag-Grid: rowDataChanged is deprecated, either call refreshView() to refresh everything, or call rowNode.setRowData(newData) to set value on a particular node');
+	        // console.log('ag-Grid: rowDataChanged is deprecated, either call refreshView() to refresh everything, or call rowNode.setRowData(newData) to set value on a particular node');
 	        this.refreshView();
 	    };
 	    GridApi.prototype.refreshView = function () {
@@ -2912,7 +2911,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    GridApi.prototype.onGroupExpandedOrCollapsed = function (deprecated_refreshFromIndex) {
 	        if (utils_1.Utils.missing(this.inMemoryRowModel)) {
-	            console.log('ag-Grid: cannot call onGroupExpandedOrCollapsed unless using normal row model');
+	            // console.log('ag-Grid: cannot call onGroupExpandedOrCollapsed unless using normal row model');
 	        }
 	        if (utils_1.Utils.exists(deprecated_refreshFromIndex)) {
 	            console.log('ag-Grid: api.onGroupExpandedOrCollapsed - refreshFromIndex parameter is not longer used, the grid will refresh all rows');

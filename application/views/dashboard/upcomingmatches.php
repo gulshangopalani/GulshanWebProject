@@ -1,29 +1,32 @@
- 
 <div class="row padding">
-<div class="col-md-12 inplay">
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+<div class="container container col-md-12">
+  <div class="accordion-option">
+  </div>
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-          <a data-toggle="collapse" data-parent="#accordion" id="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-             <h4 class="panel-title">Cricket</h4>
-          </a>
+      <div class="inplay panel-heading games-header" role="tab" id="headingOne">
+        <h4 class="panel-title">
 
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body">
-              <ul class="sport-high">
-                  <li class="clearfix" ng-repeat="match in sportDetail" ng-show="match.sportname=='Cricket' && od.status=='OPEN'">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Circket
+        </a>
+      </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+          <ul class="sport-high">
+                  <li class="clearfix" ng-repeat="match in sportDetail" ng-show="match.sportname=='Cricket' && od.status=='OPEN' && od.inplay==false">
 
                           <div class="spor-lft">
                              <a ui-sref="userDashboard.{{getUrl(match.TypeID,'match.matchid','match.marketid',match.matchName,match.MstDate,match.SportId)}}" class="left-play">
-                              {{match.matchName}} >>{{match.HeadName}}>>{{match.Market}}
+                              {{match.matchName}}-{{match.HeadName}}-{{match.Market}}
                              <span class="glyphicon glyphicon-check" aria-hidden="true" ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}"></span>
                             </a>
 
                              <div class="right-play">
                                <span  ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}">{{od.status=='OPEN'?od.inplay?"In-Play":"Going In-Play":od.status}}</span>
                                <span style="color: rgb(221,44,0);font-weight: 600;">{{match.MstDate | date : 'EEEE HH:mm'}}</span>
-                                
+
                             </div>
                           </div>
                           <div class="spor-rgt" ng-if='od=(oddsDetail|filter:{"marketId":match.marketid})[0]' ng-show='od.status=="OPEN"'>
@@ -50,31 +53,33 @@
                           </div>
                   </li>
               </ul>
-            </div>
         </div>
+      </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingTwo">
-          <a class="collapsed" data-toggle="collapse" data-parent="#accordion" id="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-             <h4 class="panel-title"> Soccer</h4>
-          </a>
-        </div>
-        <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-            <div class="panel-body">
-              <ul class="sport-high">
-                  <li class="clearfix" ng-repeat="match in sportDetail" ng-show="match.sportname=='Soccer' && od.status=='OPEN'">
+      <div class="inplay panel-heading games-header" role="tab" id="headingTwo">
+        <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          Soccer (Football)
+        </a>
+      </h4>
+      </div>
+      <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="panel-body">
+          <ul class="sport-high">
+                  <li class="clearfix" ng-repeat="match in sportDetail" ng-show="match.sportname=='Soccer' && od.status=='OPEN' && od.inplay==false">
                           <!-- {{match.sportname}} -->
                           <div class="spor-lft">
                              <a ui-sref="userDashboard.{{getUrl(match.TypeID,'match.matchid','match.marketid',match.matchName,match.MstDate,match.SportId)}}" class="left-play">
-                              {{match.matchName}} >>{{match.HeadName}}>>{{match.Market}}
+                              {{match.matchName}} - {{match.HeadName}} - {{match.Market}}
                              <span class="glyphicon glyphicon-check" aria-hidden="true" ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}"></span>
                             </a>
 
                              <div class="right-play">
-                              
+
                                <span  ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}">{{od.status=='OPEN'?od.inplay?"In-Play":"Going In-Play":od.status}}</span>
                                 <span style="color: rgb(221,44,0);font-weight: 600;">{{match.MstDate | date : 'EEEE HH:mm'}}</span>
-                                
+
                             </div>
                           </div>
                           <div class="spor-rgt" ng-if='od=(oddsDetail|filter:{"marketId":match.marketid})[0]' ng-show='od.status=="OPEN"'>
@@ -101,33 +106,33 @@
                           </div>
                   </li>
               </ul>
-            </div>
         </div>
+      </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingThree">
-           <a class="collapsed" data-toggle="collapse" data-parent="#accordion" id="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-             <h4 class="panel-title"> Tennis </h4>
-           </a>
-        </div>
-        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
-            <div class="panel-body">
-              <!-- {{sportDetail}} -->
-              <ul class="sport-high">
-                  <li class="clearfix" ng-repeat="match in sportDetail" ng-show="match.sportname=='Tennis' && od.status=='OPEN'">
+      <div class="inplay panel-heading games-header" role="tab" id="headingThree">
+        <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+          Tennis
+        </a>
+      </h4>
+      </div>
+      <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+        <div class="panel-body">
+          <ul class="sport-high">
+                  <li class="clearfix" ng-repeat="match in sportDetail" ng-show="match.sportname=='Tennis' && od.status=='OPEN' && od.inplay==false">
                           <!-- {{match.sportname}} -->
                            <div class="spor-lft">
-
                              <a ui-sref="userDashboard.{{getUrl(match.TypeID,'match.matchid','match.marketid',match.matchName,match.MstDate,match.SportId)}}" class="left-play">
-                              {{match.matchName}}>> {{match.HeadName}}>>{{match.Market}}
+                              {{match.matchName}} - {{match.HeadName}} - {{match.Market}}
                              <span class="glyphicon glyphicon-check" aria-hidden="true" ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}"></span>
                             </a>
 
                              <div class="right-play">
-                              
+
                                <span  ng-class="{'mat-stat':(od.inplay && od.status=='OPEN')}">{{od.status=='OPEN'?od.inplay?"In-Play":"Going In-Play":od.status}}</span>
                                 <span style="color: rgb(221,44,0);font-weight: 600;">{{match.MstDate | date : 'EEEE HH:mm'}}</span>
-                                
+
                             </div>
                           </div>
                           <div class="spor-rgt" ng-if='od=(oddsDetail|filter:{"marketId":match.marketid})[0]' ng-show='od.status=="OPEN"'>
@@ -154,13 +159,9 @@
                           </div>
                   </li>
               </ul>
-            </div>
         </div>
+      </div>
     </div>
-
+  </div>
 </div>
-</div>
-</div>
-
-        
 </div>

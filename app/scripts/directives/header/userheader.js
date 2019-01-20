@@ -19,7 +19,7 @@ app.directive('userheader', ['$location','$http', 'sessionService', '$timeout','
                         
                 });
             }
-            
+
            
             //for Marque BY Manish
             $scope.ShowMessageOnHeader = function(){

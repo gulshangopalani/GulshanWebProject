@@ -33,7 +33,7 @@ app.controller('anctStatementCntr', function ($scope, $http, $filter, sessionSer
         }, 0);
     };
     $scope.total = function(val1, val2){
-        debugger;
+        //debugger;
         var Temp1= parseFloat(val1)+parseFloat(val2);
         return Temp1;
          

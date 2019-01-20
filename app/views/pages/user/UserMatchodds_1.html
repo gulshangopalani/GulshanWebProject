@@ -120,7 +120,7 @@
                     
                 </div>
             <!-- End of Football Api -->
-        </div>  
+        </div>
         <div>
         <div class="matchodd-header">
             <div class="row">
@@ -261,17 +261,11 @@
                                 <div class="col-sm-5 col-xs-5 padding" ng-init="stake=0">
                                     <label>stake</label>
                                     <input type="number" min="1" max="500000" ng-model="stake" class=" form-control" />
-
                                     <input type="hidden" name="userId" id="userId" value="{{UserId}}">
-
                                     <input type="hidden" name="ParantId" id="ParantId" value="{{ParantId}}">
-
                                     <input type="hidden" name="loginId" id="loginId" value="{{loginId}}">
-
                                     <input type="hidden" name="selectionId" id="selectionId" value="{{selectionId}}">
-
                                     <input type="hidden" name="matchId" id="matchId" value="{{MatchId}}">
-
                                     <input type="hidden" name="isback" id="isback" ng-value="formStatus">
 
                                     <input type="hidden" name="MarketId" id="MarketId" value="{{MarketId}}">
@@ -284,17 +278,18 @@
                                 </div>
                             </div>
                         </div>
+                        <span class = "glyphicon glyphicon-alert alert-info alert-message displayErrorMsg" id = "displayErrorMsg">Minimum Stake is 100 points</span>
                         <div class="col-sm-12 padding">
-                            <div ng-if="$root.MyLenth==0">                                     
+                            <div ng-if="$root.MyLenth==0">
                         <button type="button" ng-click="stakeVal(1000,selectionId)" class="btn num-btns">1000</button>
                         <button type="button" ng-click="stakeVal(3000,selectionId)" class="btn num-btns">3000</button>
                         <button type="button" ng-click="stakeVal(5000,selectionId)" class="btn num-btns">5000</button>
                         <button type="button" ng-click="stakeVal(10000,selectionId)" class="btn num-btns">10000</button>
                         <button type="button" ng-click="stakeVal(25000,selectionId)" class="btn num-btns">25000</button>
                         <button type="button" ng-click="stakeVal(50000,selectionId)" class="btn num-btns">50000</button>
-						 <button type="button" ng-click="stakeVal(100000,selectionId)" class="btn num-btns">100000</button>
-						  <button type="button" ng-click="stakeVal(200000,selectionId)" class="btn num-btns">200000</button>
-						   <button type="button" ng-click="stakeVal(300000,selectionId)" class="btn num-btns">300000</button>
+                        <button type="button" ng-click="stakeVal(100000,selectionId)" class="btn num-btns">100000</button>
+						<button type="button" ng-click="stakeVal(200000,selectionId)" class="btn num-btns">200000</button>
+						<button type="button" ng-click="stakeVal(300000,selectionId)" class="btn num-btns">300000</button>
                         <button type="button" ng-click="stakeValReset(0)" class="btn clr-btn">Clear</button>
                         <button type="button" class="btn cancel-sel" ng-click="reset_all_selection()">Cancel</button>
                         <button type="submit" ng-disabled="(!betUserSubmit.$valid) || btnPlaceDis" class="btn place-bet" ng-click="place_bet()">Place bets</button>
@@ -328,69 +323,71 @@
 </div>
 
 <!-- start code for Fancy -->
-    
-   
+
     <div class="fancyMarketTable" ng-if="SPORTID==4">
-                     <div class="session_run">
-                        <table class="table fancy-table apl-table">
-                           <thead>
-                              <tr>
-                                 <th class="market-name">Session Runs <button ng-click="countdown();">Refresh SessionFancy</button></th>
-                                 <th class="lay">No</th>
-                                 <th class="back">Yes</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr ng-repeat="Fancy in FancyArray.items">
-                                 <td class="market-name">
-                                    <div class="event-name">{{Fancy.name}}</div>
-                                    <div class="selection-pnl">
-                                    </div>
-                                 </td>
-                                 <td class="main-container" colspan="6" ng-class="{'SUSPENDED':'suspend-box','Ball Running':'ball-msg-box1'}[Fancy.statusLabel]">
-                                    <div ng-if="Fancy.statusLabel=='Ball Running'" class="ball-msg-box1">
-                                       <h1>{{Fancy.statusLabel}}</h1>
-                                    </div>
-                                    <div ng-if="Fancy.statusLabel=='SUSPENDED'" class="suspend-box">
-                                       <h1>{{Fancy.statusLabel}}</h1>
-                                    </div>
-                                    <div>
-                                       <div class="odds-container">
-                                          <table class="fancy-table apl-table">
-                                             <tbody>
-                                                <tr>
-                                                   <td class="lay show-size" ng-click="fancyBetSlip($event,Fancy.layLine,Fancy.layPrice,Fancy,1,1)">
-                                                      <strong class="odds">{{Fancy.layLine}} </strong>
-                                                      <div class="size">
-                                                         <span> {{Fancy.layPrice}} </span>
-                                                      </div>
-                                                   </td>
-                                                   <td class="back show-size" ng-click="fancyBetSlip($event,Fancy.backLine,Fancy.backPrice,Fancy,1,0)">
-                                                      <strong class="odds">{{Fancy.backLine}}</strong>
-                                                      <div class="size">
-                                                         <span> {{Fancy.backPrice}} </span>
-                                                      </div>
-                                                   </td>
-                                                   <!-- <td colspan="2" class="odds-placeholder hidden-xs">
-                                                      <span class="max-liability">
-                                                      Max Bet:{{Fancy.maxLiabilityPerBet}}
-                                                      </span>
-                                                      <span class="max-liability">
-                                                      Max Mkt:{{Fancy.maxLiabilityPerMarket}}
-                                                      </span>
-                                                   </td> -->
-                                                </tr>
-                                             </tbody>
-                                          </table>
-                                       </div>
-                                    </div>
-                                 </td>
-                              </tr>
-                           </tbody>
-                        </table>
-                     </div>
-                     <!-- {{FancyArray}} -->
-                  </div>
+        <div class="session_run">
+            <table class="table fancy-table apl-table">
+                <thead>
+                <tr>
+                    <th class="market-name">Session Runs</th>
+                    <th class="lay">No</th>
+                    <th class="back">Yes</th>
+                </tr>
+                </thead>
+                   <tbody>
+                      <tr ng-repeat="Fancy in FancyArray.items" class="ng-scope">
+                         <td class="market-name" ng-click="getfancyLadder(Fancy)" data-toggle="modal" data-target="#pandlTable">
+                            <div class="event-name">{{Fancy.name}}</div>
+                            <div class="selection-pnl ng-binding" style="color: RED;">
+                                Max Exposure : {{}}
+                            </div>
+                         </td>
+                         <td class="main-container" colspan="6" ng-class="{'SUSPENDED':'suspend-box','Ball Running':'ball-msg-box1'}[Fancy.statusLabel]">
+                            <div ng-if="Fancy.statusLabel=='Ball Running'" class="ball-msg-box1">
+                               <h1>{{Fancy.statusLabel}}</h1>
+                            </div>
+                            <div ng-if="Fancy.statusLabel=='SUSPENDED'" class="suspend-box">
+                               <h1>{{Fancy.statusLabel}}</h1>
+                            </div>
+                            <div>
+                               <div class="odds-container">
+                                  <table class="fancy-table apl-table">
+                                     <tbody>
+                                        <tr>
+                                           <td class="lay show-size" ng-click="fancyBetSlip($event,Fancy.layLine,Fancy.layPrice,Fancy,1,1)">
+                                              <strong class="odds">{{Fancy.layLine}} </strong>
+                                              <div class="size">
+                                                 <span> {{Fancy.layPrice}} </span>
+                                              </div>
+                                           </td>
+                                           <td class="back show-size" ng-click="fancyBetSlip($event,Fancy.backLine,Fancy.backPrice,Fancy,1,0)">
+                                              <strong class="odds">{{Fancy.backLine}}</strong>
+                                              <div class="size">
+                                                 <span> {{Fancy.backPrice}} </span>
+                                              </div>
+                                           </td>
+                                           <!-- <td colspan="2" class="odds-placeholder hidden-xs">
+                                              <span class="max-liability">
+                                              Max Bet:{{Fancy.maxLiabilityPerBet}}
+                                              </span>
+                                              <span class="max-liability">
+                                              Max Mkt:{{Fancy.maxLiabilityPerMarket}}
+                                              </span>
+                                           </td> -->
+                                        </tr>
+
+                                     </tbody>
+                                  </table>
+                               </div>
+                            </div>
+                         </td>
+                      </tr>
+                      <tr class="rowSeparater"></tr>
+                   </tbody>
+            </table>
+         </div>
+         <!-- {{FancyArray}} -->
+      </div>
 <!-- end the code of Fancy -->
 <!-- start Fancy Betslip -->
 <div class="visible-xs">
@@ -664,21 +661,13 @@
                                 <div class="col-sm-5 padding" ng-init="stake=0">
                                     <label>stake</label>
                                     <input type="number" min="1" max="500000" ng-model="stake" class=" form-control" />
-
                                     <input type="hidden" name="userId" id="userId" value="{{UserId}}">
-
                                     <input type="hidden" name="ParantId" id="ParantId" value="{{ParantId}}">
-
                                     <input type="hidden" name="loginId" id="loginId" value="{{loginId}}">
-
                                     <input type="hidden" name="selectionId" id="selectionId" value="{{selectionId}}">
-
                                     <input type="hidden" name="matchId" id="matchId" value="{{MatchId}}">
-
                                     <input type="hidden" name="isback" id="isback" ng-value="formStatus">
-
                                     <input type="hidden" name="MarketId" id="MarketId" value="{{MarketId}}">
-
                                     <input type="hidden" name="placeName" id="placeName" value="{{placeName}}">
                                 </div>
                                 <div class="col-sm-4 padding">
@@ -686,6 +675,8 @@
                                 <p>{{(priceVal*stake)-stake | number:2}}</p>
                                 </div>
                             </div>
+                            <span class = "glyphicon glyphicon-alert alert-info alert-message displayErrorMsg" id = "displayErrorMsg">
+                                Minimum Stake is 100 points</span>
                         </div>
                         <div class="col-sm-12 padding">
                             <div ng-if="$root.MyLenth==0">                                     
